@@ -15,13 +15,6 @@ interface Monoid<A> : Semigroup<A> {
       override val empty: A = empty
     }
 
-    inline fun <A, B : Collection<A>> ofCollection(empty: B, crossinline fromList: (List<A>) -> B): Monoid<B> =
-        of(empty) { a, b -> fromList(a + b) }
-
-    fun <A> ofList(): Monoid<List<A>> = ofCollection(emptyList()) { it }
-
-    fun <A> ofSet(): Monoid<Set<A>> = ofCollection(emptySet()) { it.toSet() }
-
     inline fun <A> combineAll(elems: Collection<A?>, empty: A, combine: (A, A) -> A): A =
         Semigroup.combineAll(elems, combine) ?: empty
   }
