@@ -19,3 +19,6 @@ val MulIntMonoid: Monoid<Int> by lazy { Monoid.of(1) { a, b -> a * b } }
 val MulLongMonoid: Monoid<Long> by lazy { Monoid.of(1L) { a, b -> a * b } }
 val MulFloatMonoid: Monoid<Float> by lazy { Monoid.of(1F) { a, b -> a * b } }
 val MulDoubleMonoid: Monoid<Double> by lazy { Monoid.of(1.0) { a, b -> a * b } }
+
+val BoolOrMonoid: Monoid<Boolean> by lazy { Monoid.of(false) { a, b -> a or b } }
+val BoolAndMonoid: Monoid<Boolean> by lazy { Monoid.of(true) { a, b -> a and b } }
