@@ -1,12 +1,19 @@
 package com.github.mttkay.kats.predef
 
 import com.github.mttkay.kats.Monoid
+import com.github.mttkay.kats.ext.nullable.nullableMonoid
 
 val AddIntMonoid: Monoid<Int> by lazy { Monoid.of(0) { a, b -> a + b } }
 val AddLongMonoid: Monoid<Long> by lazy { Monoid.of(0L) { a, b -> a + b } }
 val AddFloatMonoid: Monoid<Float> by lazy { Monoid.of(0F) { a, b -> a + b } }
 val AddDoubleMonoid: Monoid<Double> by lazy { Monoid.of(0.0) { a, b -> a + b } }
 val AddStringMonoid: Monoid<String> by lazy { Monoid.of("") { a, b -> a + b } }
+
+val AddNullableIntMonoid: Monoid<Int?> by lazy { nullableMonoid(AddIntMonoid) }
+val AddNullableLongMonoid: Monoid<Long?> by lazy { nullableMonoid(AddLongMonoid) }
+val AddNullableFloatMonoid: Monoid<Float?> by lazy { nullableMonoid(AddFloatMonoid) }
+val AddNullableDoubleMonoid: Monoid<Double?> by lazy { nullableMonoid(AddDoubleMonoid) }
+val AddNullableStringMonoid: Monoid<String?> by lazy { nullableMonoid(AddStringMonoid) }
 
 val MulIntMonoid: Monoid<Int> by lazy { Monoid.of(1) { a, b -> a * b } }
 val MulLongMonoid: Monoid<Long> by lazy { Monoid.of(1L) { a, b -> a * b } }
