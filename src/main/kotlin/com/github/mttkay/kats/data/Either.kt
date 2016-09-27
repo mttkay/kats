@@ -1,4 +1,6 @@
-package com.github.mttkay.kats
+package com.github.mttkay.kats.data
+
+import com.github.mttkay.kats.Functor
 
 interface EitherFunctor<A, out B> : Functor<B> {
 

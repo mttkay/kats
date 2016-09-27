@@ -1,4 +1,4 @@
-package com.github.mttkay.kats
+package com.github.mttkay.kats.data
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
