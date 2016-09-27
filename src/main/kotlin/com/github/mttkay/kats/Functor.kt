@@ -1,6 +1,6 @@
 package com.github.mttkay.kats
 
-interface Functor<A> {
+interface Functor<out A> {
 
   fun <B> map(f: (A) -> B): Functor<B>
 
