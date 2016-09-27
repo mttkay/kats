@@ -1,13 +1,13 @@
 package com.github.mttkay.kats
 
-interface EitherFunctor<A, B> : Functor<B> {
+interface EitherFunctor<A, out B> : Functor<B> {
 
   override fun <C> map(f: (B) -> C): Either<A, C>
 }
 
-sealed class Either<A, B>(open val value: Any?) : EitherFunctor<A, B> {
+sealed class Either<A, out B> : EitherFunctor<A, B> {
 
-  class Left<A, B>(override val value: A) : Either<A, B>(value) {
+  class Left<A, out B>(val value: A) : Either<A, B>() {
 
     override val isLeft = true
 
@@ -16,7 +16,7 @@ sealed class Either<A, B>(open val value: Any?) : EitherFunctor<A, B> {
     override fun <C> map(f: (B) -> C): Left<A, C> = Left(value)
   }
 
-  class Right<A, B>(override val value: B) : Either<A, B>(value) {
+  class Right<A, out B>(val value: B) : Either<A, B>() {
 
     override val isLeft = false
 
