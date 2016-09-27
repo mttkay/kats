@@ -1,6 +1,7 @@
 package com.github.mttkay.kats
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.fail
 import org.junit.Test
 
 class EitherTest {
@@ -26,12 +27,18 @@ class EitherTest {
   @Test
   fun `map right bias on Left`() {
     val mapped = leftOutcome.map { it.toString() }
-    assertThat(mapped.value).isEqualTo(Error)
+    when (mapped) {
+      is Either.Left -> assertThat(mapped.value).isEqualTo(Error)
+      is Either.Right -> fail("Expected Left outcome")
+    }
   }
 
   @Test
   fun `map right bias on Right`() {
     val mapped = rightOutcome.map { it.toString() }
-    assertThat(mapped.value).isEqualTo("42")
+    when (mapped) {
+      is Either.Left -> fail("Expected Right outcome")
+      is Either.Right -> assertThat(mapped.value).isEqualTo("42")
+    }
   }
 }
