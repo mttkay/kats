@@ -1,7 +1,7 @@
 package com.github.mttkay.kats
 
-interface Functor<out A> {
+interface Functor<F> {
 
-  fun <B> map(f: (A) -> B): Functor<B>
+  fun <A, B> fmap(fa: K1<F, A>, f: (A) -> B): K1<F, B>
 
 }
