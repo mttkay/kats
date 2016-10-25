@@ -2,12 +2,14 @@ package com.github.mttkay.kats.data.option
 
 import com.github.mttkay.kats.K1
 
-sealed class Option<out A> : K1<Option.F, A> {
+typealias OptionKind<A> = K1<Option.F, A>
+
+sealed class Option<out A> : OptionKind<A> {
 
   class F
 
   companion object {
-    fun <A> narrow(kind: K1<F, A>): Option<A> = kind as Option<A>
+    fun <A> narrow(kind: OptionKind<A>): Option<A> = kind as Option<A>
   }
 
   class Some<out A>(val value: A) : Option<A>() {

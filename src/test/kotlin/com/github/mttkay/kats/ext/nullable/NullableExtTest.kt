@@ -18,11 +18,11 @@ class NullableExtTest {
 
   @Test
   fun `fold null`() {
-    assertThat((null as Int?).fold("none") { it.toString() }).isEqualTo("none")
+    assertThat((null as Int?).fold("none", Int::toString)).isEqualTo("none")
   }
 
   @Test
   fun `fold value`() {
-    assertThat(42.fold("none") { it.toString() }).isEqualTo("42")
+    assertThat(42.fold("none", Int::toString)).isEqualTo("42")
   }
 }

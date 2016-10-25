@@ -1,24 +1,26 @@
 package com.github.mttkay.kats.data.either
 
 import com.github.mttkay.kats.K1
-import com.github.mttkay.kats.K2
 
-sealed class Either<L, R> : K2<Either.F, L, R> {
+typealias EitherF<L> = K1<Either.F, L>
+typealias EitherKind<L, R> = K1<EitherF<L>, R>
+
+sealed class Either<out L, out R> : EitherKind<L, R> {
 
   class F
 
   companion object {
-    fun <L, R> narrow(either: K1<K1<Either.F, L>, R>) = either as Either<L, R>
+    fun <L, R> narrow(either: EitherKind<L, R>) = either as Either<L, R>
   }
 
-  class Left<L, R>(val value: L) : Either<L, R>() {
+  class Left<out L, out R>(val value: L) : Either<L, R>() {
 
     override val isLeft = true
 
     override val isRight = false
   }
 
-  class Right<L, R>(val value: R) : Either<L, R>() {
+  class Right<out L, out R>(val value: R) : Either<L, R>() {
 
     override val isLeft = false
 
