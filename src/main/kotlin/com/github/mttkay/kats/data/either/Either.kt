@@ -18,6 +18,21 @@ sealed class Either<out L, out R> : EitherKind<L, R> {
     override val isLeft = true
 
     override val isRight = false
+
+    override fun equals(other: Any?): Boolean {
+      if (this === other) return true
+      if (other?.javaClass != javaClass) return false
+
+      other as Left<*, *>
+
+      if (value != other.value) return false
+
+      return true
+    }
+
+    override fun hashCode(): Int {
+      return value?.hashCode() ?: 0
+    }
   }
 
   class Right<out L, out R>(val value: R) : Either<L, R>() {
@@ -25,6 +40,21 @@ sealed class Either<out L, out R> : EitherKind<L, R> {
     override val isLeft = false
 
     override val isRight = true
+
+    override fun equals(other: Any?): Boolean {
+      if (this === other) return true
+      if (other?.javaClass != javaClass) return false
+
+      other as Right<*, *>
+
+      if (value != other.value) return false
+
+      return true
+    }
+
+    override fun hashCode(): Int {
+      return value?.hashCode() ?: 0
+    }
   }
 
   abstract val isLeft: Boolean

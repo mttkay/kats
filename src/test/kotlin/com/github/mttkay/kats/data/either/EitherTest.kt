@@ -25,7 +25,7 @@ class EitherTest {
 
   @Test
   fun `fmap right bias on Left`() {
-    val mapped = leftOutcome.fmap { it.toString() }
+    val mapped = leftOutcome.fmap(Int::toString)
     when (mapped) {
       is Either.Left -> assertThat(mapped.value).isEqualTo(Error)
       is Either.Right -> fail("Expected Left outcome")
@@ -34,10 +34,20 @@ class EitherTest {
 
   @Test
   fun `fmap right bias on Right`() {
-    val mapped = rightOutcome.fmap { it.toString() }
+    val mapped = rightOutcome.fmap(Int::toString)
     when (mapped) {
       is Either.Left -> fail("Expected Right outcome")
       is Either.Right -> assertThat(mapped.value).isEqualTo("42")
     }
+  }
+
+  @Test // TODO: use proper equivalence tester
+  fun `right value equality`() {
+    assertThat(Either.Right<Error, Int>(42)).isEqualTo(Either.Right<Error, Int>(42))
+  }
+
+  @Test // TODO: use proper equivalence tester
+  fun `left value equality`() {
+    assertThat(Either.Left<Error, Int>(Error)).isEqualTo(Either.Left<Error, Int>(Error))
   }
 }
