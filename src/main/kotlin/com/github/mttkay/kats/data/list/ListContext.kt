@@ -14,4 +14,18 @@ class ListContext<out A>(val list: List<A>) : ListKind<A> {
   fun <B> fmap(f: (A) -> B): ListContext<B> = ListFunctor.fmap(this, f)
   fun <B> map(f: (A) -> B): List<B> = fmap(f).list
 
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (other?.javaClass != javaClass) return false
+
+    other as ListContext<*>
+
+    if (list != other.list) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    return list.hashCode()
+  }
 }
