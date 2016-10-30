@@ -6,13 +6,13 @@ import com.github.mttkay.kats.Semigroup
 /*
 Monoids
  */
-val AddIntMonoid: Monoid<Int> by lazy { Monoid.of(0) { a, b -> a + b } }
-val AddLongMonoid: Monoid<Long> by lazy { Monoid.of(0L) { a, b -> a + b } }
-val AddFloatMonoid: Monoid<Float> by lazy { Monoid.of(0F) { a, b -> a + b } }
-val AddDoubleMonoid: Monoid<Double> by lazy { Monoid.of(0.0) { a, b -> a + b } }
-val AddStringMonoid: Monoid<String> by lazy { Monoid.of("") { a, b -> a + b } }
+val AddIntMonoid: Monoid<Int> by lazy { Monoid.create(0) { a, b -> a + b } }
+val AddLongMonoid: Monoid<Long> by lazy { Monoid.create(0L) { a, b -> a + b } }
+val AddFloatMonoid: Monoid<Float> by lazy { Monoid.create(0F) { a, b -> a + b } }
+val AddDoubleMonoid: Monoid<Double> by lazy { Monoid.create(0.0) { a, b -> a + b } }
+val AddStringMonoid: Monoid<String> by lazy { Monoid.create("") { a, b -> a + b } }
 
-private fun <T> nullableMonoid(sg: Semigroup<T>): Monoid<T?> = Monoid.of(null as T?) { a, b ->
+private fun <T> nullableMonoid(sg: Semigroup<T>): Monoid<T?> = Monoid.create(null as T?) { a, b ->
   sg.maybeCombine(a, b)
 }
 val AddNullableIntMonoid: Monoid<Int?> by lazy { nullableMonoid(AddIntMonoid) }
@@ -21,10 +21,10 @@ val AddNullableFloatMonoid: Monoid<Float?> by lazy { nullableMonoid(AddFloatMono
 val AddNullableDoubleMonoid: Monoid<Double?> by lazy { nullableMonoid(AddDoubleMonoid) }
 val AddNullableStringMonoid: Monoid<String?> by lazy { nullableMonoid(AddStringMonoid) }
 
-val MulIntMonoid: Monoid<Int> by lazy { Monoid.of(1) { a, b -> a * b } }
-val MulLongMonoid: Monoid<Long> by lazy { Monoid.of(1L) { a, b -> a * b } }
-val MulFloatMonoid: Monoid<Float> by lazy { Monoid.of(1F) { a, b -> a * b } }
-val MulDoubleMonoid: Monoid<Double> by lazy { Monoid.of(1.0) { a, b -> a * b } }
+val MulIntMonoid: Monoid<Int> by lazy { Monoid.create(1) { a, b -> a * b } }
+val MulLongMonoid: Monoid<Long> by lazy { Monoid.create(1L) { a, b -> a * b } }
+val MulFloatMonoid: Monoid<Float> by lazy { Monoid.create(1F) { a, b -> a * b } }
+val MulDoubleMonoid: Monoid<Double> by lazy { Monoid.create(1.0) { a, b -> a * b } }
 
-val BoolOrMonoid: Monoid<Boolean> by lazy { Monoid.of(false) { a, b -> a or b } }
-val BoolAndMonoid: Monoid<Boolean> by lazy { Monoid.of(true) { a, b -> a and b } }
+val BoolOrMonoid: Monoid<Boolean> by lazy { Monoid.create(false) { a, b -> a or b } }
+val BoolAndMonoid: Monoid<Boolean> by lazy { Monoid.create(true) { a, b -> a and b } }

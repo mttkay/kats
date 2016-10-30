@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 class MonoidTest {
-  val IntMonoid = Monoid.of(0) { a1: Int, a2: Int -> a1 + a2 }
+  val IntMonoid = Monoid.create(0) { a1: Int, a2: Int -> a1 + a2 }
 
   @Test
   fun `combine`() {
