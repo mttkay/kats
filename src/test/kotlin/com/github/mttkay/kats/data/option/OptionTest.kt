@@ -19,27 +19,22 @@ class OptionTest {
   }
 
   @Test
-  fun `fmap maps values to Some`() {
-    assertThat(42.liftOption().fmap { it.toString() }).isEqualTo(Some("42"))
-  }
-
-  @Test
-  fun `map unlifts Some(value) to value`() {
-    assertThat(42.liftOption().map { it.toString() }).isEqualTo("42")
-  }
-
-  @Test
-  fun `map unlifts None to null`() {
-    assertThat((null as Int?).liftOption().map { it.toString() }).isNull()
-  }
-
-  @Test
-  fun `getOrElse for Some value`() {
+  fun `getOrElse for Some`() {
     assertThat(Some(42).getOrElse { 0 }).isEqualTo(42)
   }
 
   @Test
   fun `getOrElse for None`() {
     assertThat(None.getOrElse { 0 }).isEqualTo(0)
+  }
+
+  @Test
+  fun `orElse for Some`() {
+    assertThat(Some(42).orElse { Some(0) }).isEqualTo(Some(42))
+  }
+
+  @Test
+  fun `orElse for None`() {
+    assertThat(None.orElse { Some(0) }).isEqualTo(Some(0))
   }
 }

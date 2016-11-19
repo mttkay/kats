@@ -1,7 +1,6 @@
 package com.github.mttkay.kats.data.either
 
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
 import org.junit.Test
 
 class EitherTest {
@@ -21,24 +20,6 @@ class EitherTest {
   fun `isLeft and isRight on Right`() {
     assertThat(rightOutcome.isLeft).isFalse()
     assertThat(rightOutcome.isRight).isTrue()
-  }
-
-  @Test
-  fun `fmap right bias on Left`() {
-    val mapped = leftOutcome.fmap(Int::toString)
-    when (mapped) {
-      is Either.Left -> assertThat(mapped.value).isEqualTo(Error)
-      is Either.Right -> fail("Expected Left outcome")
-    }
-  }
-
-  @Test
-  fun `fmap right bias on Right`() {
-    val mapped = rightOutcome.fmap(Int::toString)
-    when (mapped) {
-      is Either.Left -> fail("Expected Right outcome")
-      is Either.Right -> assertThat(mapped.value).isEqualTo("42")
-    }
   }
 
   @Test // TODO: use proper equivalence tester

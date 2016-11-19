@@ -61,5 +61,6 @@ sealed class Either<out L, out R> : EitherKind<L, R> {
 
   abstract val isRight: Boolean
 
-  fun <S> fmap(f: (R) -> S) = object : EitherFunctor<L> {}.fmap(this, f)
+  fun <S> fmap(f: (R) -> S): Either<L, S> = EitherFunctor.instance<L>().fmap(this, f)
+
 }
