@@ -4,15 +4,15 @@ import com.github.mttkay.kats.K1
 
 typealias ListKind<A> = K1<ListContext.F, A>
 
-class ListContext<out A>(val list: List<A>) : ListKind<A> {
-  class F
+fun <A> ListKind<A>.narrow(): ListContext<A> = this as ListContext<A>
 
-  companion object {
-    fun <A> narrow(fa: ListKind<A>): ListContext<A> = fa as ListContext<A>
-  }
+class ListContext<out A>(val list: List<A>) : ListKind<A> {
+
+  class F {}
+
+  constructor(vararg values: A) : this(values.toList())
 
   fun <B> fmap(f: (A) -> B): ListContext<B> = ListFunctor.fmap(this, f)
-  fun <B> map(f: (A) -> B): List<B> = list.map(f)
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true

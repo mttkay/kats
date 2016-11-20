@@ -5,7 +5,7 @@ import com.github.mttkay.kats.Functor
 object OptionFunctor : Functor<Option.F> {
 
   override fun <A, B> fmap(fa: OptionKind<A>, f: (A) -> B): Option<B> {
-    val option = Option.narrow(fa)
+    val option = fa.narrow()
     return when (option) {
       is Option.Some -> Option.Some(f(option.value))
       is Option.None -> Option.None

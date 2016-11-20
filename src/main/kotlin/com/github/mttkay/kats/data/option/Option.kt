@@ -4,13 +4,11 @@ import com.github.mttkay.kats.K1
 
 typealias OptionKind<A> = K1<Option.F, A>
 
+fun <A> OptionKind<A>.narrow(): Option<A> = this as Option<A>
+
 sealed class Option<out A> : OptionKind<A> {
 
   class F
-
-  companion object {
-    fun <A> narrow(kind: OptionKind<A>): Option<A> = kind as Option<A>
-  }
 
   class Some<out A>(val value: A) : Option<A>() {
     override fun equals(other: Any?): Boolean {

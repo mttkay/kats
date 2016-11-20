@@ -5,13 +5,11 @@ import com.github.mttkay.kats.K1
 typealias EitherF<L> = K1<Either.F, L>
 typealias EitherKind<L, R> = K1<EitherF<L>, R>
 
+fun <L, R> EitherKind<L, R>.narrow() = this as Either<L, R>
+
 sealed class Either<out L, out R> : EitherKind<L, R> {
 
   class F
-
-  companion object {
-    fun <L, R> narrow(either: EitherKind<L, R>) = either as Either<L, R>
-  }
 
   class Left<out L, out R>(val value: L) : Either<L, R>() {
 

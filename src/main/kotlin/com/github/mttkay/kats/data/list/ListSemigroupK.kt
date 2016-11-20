@@ -4,8 +4,8 @@ import com.github.mttkay.kats.SemigroupK
 
 object ListSemigroupK : SemigroupK<ListContext.F> {
   override fun <A> combineK(fa1: ListKind<A>, fa2: ListKind<A>): ListContext<A> {
-    val left = ListContext.narrow(fa1).list
-    val right = ListContext.narrow(fa2).list
+    val left = fa1.narrow().list
+    val right = fa2.narrow().list
     return ListContext(left + right)
   }
 }

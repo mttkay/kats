@@ -15,11 +15,5 @@ class ListFunctorTest {
     assertThat(ctx.list).containsExactly("1", "2", "3")
   }
 
-  @Test
-  fun `map unlifts list from ListContext`() {
-    val list: List<String> = liftedList.map(Int::toString)
-
-    assertThat(list).containsExactly("1", "2", "3")
-  }
 
 }

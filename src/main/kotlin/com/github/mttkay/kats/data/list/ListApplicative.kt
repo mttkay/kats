@@ -9,7 +9,7 @@ object ListApplicative : Applicative<ListContext.F> {
       ListContext(listOf(a))
 
   override fun <A, B> ap(fa: ListKind<A>, ffa: ListKind<(A) -> B>): ListContext<B> =
-      ap(ListContext.narrow(fa).list, ListContext.narrow(ffa).list).liftList()
+      ap(fa.narrow().list, ffa.narrow().list).liftList()
 
   fun <A, B> ap(fa: List<A>, ffa: List<(A) -> B>): List<B> =
       ffa.flatMap { f -> fa.map(f) }
