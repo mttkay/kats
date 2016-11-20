@@ -27,9 +27,13 @@ sealed class Option<out A> : OptionKind<A> {
     override fun hashCode(): Int {
       return value?.hashCode() ?: 0
     }
+
+    override fun toString(): String = "Some($value)"
   }
 
-  object None : Option<Nothing>()
+  object None : Option<Nothing>() {
+    override fun toString(): String = "None"
+  }
 
   val orNull: A?
     get() = when (this) {

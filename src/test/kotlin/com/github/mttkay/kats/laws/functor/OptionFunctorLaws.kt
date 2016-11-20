@@ -1,4 +1,4 @@
-package com.github.mttkay.kats.laws
+package com.github.mttkay.kats.laws.functor
 
 import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.OptionFunctor
@@ -10,7 +10,7 @@ import org.junit.runners.Parameterized.Parameters
 class OptionFunctorLaws(override val fa: Option<A>) : FunctorLaws<Option.F, Option<A>> {
 
   companion object {
-    @JvmStatic @Parameters(name = "value: {0}") fun values() = listOf(
+    @JvmStatic @Parameters(name = "Option: {0}") fun values() = listOf(
         Option.Some(a),
         Option.None
     )

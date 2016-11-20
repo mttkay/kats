@@ -33,6 +33,8 @@ sealed class Either<out L, out R> : EitherKind<L, R> {
     override fun hashCode(): Int {
       return value?.hashCode() ?: 0
     }
+
+    override fun toString(): String = "Left($value)"
   }
 
   class Right<out L, out R>(val value: R) : Either<L, R>() {
@@ -55,6 +57,8 @@ sealed class Either<out L, out R> : EitherKind<L, R> {
     override fun hashCode(): Int {
       return value?.hashCode() ?: 0
     }
+
+    override fun toString(): String = "Right($value)"
   }
 
   abstract val isLeft: Boolean

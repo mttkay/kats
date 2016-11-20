@@ -1,4 +1,4 @@
-package com.github.mttkay.kats.laws
+package com.github.mttkay.kats.laws.functor
 
 import com.github.mttkay.kats.data.either.Either
 import com.github.mttkay.kats.data.either.EitherF
@@ -13,7 +13,7 @@ typealias L = Any
 class EitherFunctorLaws(override val fa: Either<L, A>) : FunctorLaws<EitherF<L>, Either<L, A>> {
 
   companion object {
-    @JvmStatic @Parameters(name = "value: {0}") fun values() = listOf(
+    @JvmStatic @Parameters(name = "Either: {0}") fun values() = listOf(
         Either.Right<Any, A>(a),
         Either.Left<Any, A>(Object())
     )
