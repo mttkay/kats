@@ -5,13 +5,14 @@ import com.github.mttkay.kats.K1
 typealias EitherF<L> = K1<Either.F, L>
 typealias EitherKind<L, R> = K1<EitherF<L>, R>
 
+@Suppress("UNCHECKED_CAST")
 fun <L, R> EitherKind<L, R>.narrow() = this as Either<L, R>
 
-sealed class Either<out L, out R> : EitherKind<L, R> {
+sealed class Either<L, out R> : EitherKind<L, R> {
 
   class F
 
-  class Left<out L, out R>(val value: L) : Either<L, R>() {
+  class Left<L, out R>(val value: L) : Either<L, R>() {
 
     override val isLeft = true
 
@@ -35,7 +36,7 @@ sealed class Either<out L, out R> : EitherKind<L, R> {
     override fun toString(): String = "Left($value)"
   }
 
-  class Right<out L, out R>(val value: R) : Either<L, R>() {
+  class Right<L, out R>(val value: R) : Either<L, R>() {
 
     override val isLeft = false
 

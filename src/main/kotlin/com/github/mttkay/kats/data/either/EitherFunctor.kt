@@ -2,7 +2,7 @@ package com.github.mttkay.kats.data.either
 
 import com.github.mttkay.kats.Functor
 
-interface EitherFunctor<out L> : Functor<EitherF<L>> {
+interface EitherFunctor<L> : Functor<EitherF<L>> {
 
   companion object {
     private val functorInstance = object : EitherFunctor<Any> {}

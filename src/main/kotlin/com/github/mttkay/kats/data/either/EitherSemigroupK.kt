@@ -2,7 +2,7 @@ package com.github.mttkay.kats.data.either
 
 import com.github.mttkay.kats.SemigroupK
 
-interface EitherSemigroupK<out L> : SemigroupK<EitherF<L>> {
+interface EitherSemigroupK<L> : SemigroupK<EitherF<L>> {
 
   companion object {
     private val semigroupKInstance = object : EitherSemigroupK<Any> {}
