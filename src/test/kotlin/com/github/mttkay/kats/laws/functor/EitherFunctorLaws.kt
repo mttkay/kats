@@ -7,17 +7,17 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
 
-typealias L = Any
+private typealias L = String
 
 @RunWith(Parameterized::class)
 class EitherFunctorLaws(override val fa: Either<L, A>) : FunctorLaws<EitherF<L>, Either<L, A>> {
 
   companion object {
-    @JvmStatic @Parameters(name = "Either: {0}") fun values() = listOf(
+    @JvmStatic @Parameters(name = "Either: {0}") fun values() = arrayOf(
         Either.Right<Any, A>(a),
         Either.Left<Any, A>(Object())
     )
   }
 
-  override val functor = object : EitherFunctor<L> {}
+  override val functor = EitherFunctor.instance<L>()
 }

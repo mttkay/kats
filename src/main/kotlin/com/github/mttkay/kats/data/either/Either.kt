@@ -7,6 +7,10 @@ typealias EitherKind<L, R> = K1<EitherF<L>, R>
 
 @Suppress("UNCHECKED_CAST")
 fun <L, R> EitherKind<L, R>.narrow() = this as Either<L, R>
+@Suppress("UNCHECKED_CAST") // safe, because operates on Right
+fun <L, R> Either.Right<*, R>.leftCast() = this as Either.Right<L, R>
+@Suppress("UNCHECKED_CAST") // safe, because operates on Left
+fun <L, R> Either.Left<L, *>.rightCast() = this as Either.Left<L, R>
 
 sealed class Either<L, out R> : EitherKind<L, R> {
 
