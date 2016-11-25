@@ -12,9 +12,11 @@ class ListApplicativeLaws(override val fa: ListContext<A>,
     ApplicativeLaws<ListContext.F, ListContext<A>, ListContext<(A) -> B>> {
 
   companion object {
-    @JvmStatic @Parameters(name = "List: {0}") fun values() = arrayOf(
+    @JvmStatic @Parameters(name = "ap({0}, {1})") fun values() = arrayOf(
         arrayOf(ListContext(listOf(a)), ListContext(listOf(::f))),
-        arrayOf(ListContext(emptyList<A>()), ListContext(listOf(::f)))
+        arrayOf(ListContext(emptyList<A>()), ListContext(listOf(::f))),
+        arrayOf(ListContext(listOf(a)), ListContext(emptyList<A>())),
+        arrayOf(ListContext(emptyList<A>()), ListContext(emptyList<A>()))
     )
   }
 
