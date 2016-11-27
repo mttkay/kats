@@ -13,8 +13,8 @@ private typealias L = String
 
 @RunWith(Parameterized::class)
 class EitherApplicativeLaws(override val fa: Either<L, A>,
-                            override val ffa: Either<L, (A) -> B>) :
-    ApplicativeLaws<EitherF<L>, Either<L, A>, Either<L, (A) -> B>> {
+                            override val fab: Either<L, (A) -> B>) :
+    ApplicativeLaws<EitherF<L>, Either<L, A>> {
 
   companion object {
     @JvmStatic @Parameters(name = "ap({0}, {1})") fun values() = arrayOf(
@@ -24,6 +24,8 @@ class EitherApplicativeLaws(override val fa: Either<L, A>,
         arrayOf(Left<L, A>("fail"), Left<L, (A) -> B>("fail"))
     )
   }
+
+  override val fbc: Either<L, (B) -> C> = Right<L, (B) -> C>(::g)
 
   override val app = EitherApplicative.instance<L>()
 }
