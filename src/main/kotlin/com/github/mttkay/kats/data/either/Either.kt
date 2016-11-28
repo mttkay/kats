@@ -70,4 +70,5 @@ sealed class Either<L, out R> : EitherKind<L, R> {
 
   fun <S> fmap(f: (R) -> S): Either<L, S> = EitherFunctor.instance<L>().fmap(this, f)
 
+  fun <S> flatMap(f: (R) -> Either<L, S>): Either<L, S> = EitherMonad.instance<L>().flatMap(this, f)
 }

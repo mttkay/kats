@@ -15,7 +15,7 @@ class OptionMonadLaws(override val fa: Option<A>,
     MonadLaws<Option.F, Option<A>>(OptionMonad) {
 
   companion object {
-    @JvmStatic @Parameters(name = "ap({0}, {1})") fun values() = arrayOf(
+    @JvmStatic @Parameters(name = "fa = {0}, fab = {1}") fun values() = arrayOf(
         arrayOf(Some(a), Option.Some(::f)),
         arrayOf(None, Option.Some(::f)),
         arrayOf(Some(a), None),
