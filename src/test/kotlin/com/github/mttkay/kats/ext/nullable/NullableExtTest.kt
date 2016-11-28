@@ -15,14 +15,4 @@ class NullableExtTest {
   fun `liftOption for value`() {
     assertThat(42.liftOption()).isEqualTo(Option.Some(42))
   }
-
-  @Test
-  fun `fold null`() {
-    assertThat((null as Int?).fold("none", Int::toString)).isEqualTo("none")
-  }
-
-  @Test
-  fun `fold value`() {
-    assertThat(42.fold("none", Int::toString)).isEqualTo("42")
-  }
 }
