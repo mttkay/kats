@@ -37,4 +37,34 @@ class OptionTest {
   fun `orElse for None`() {
     assertThat(None.orElse { Some(0) }).isEqualTo(Some(0))
   }
+
+  @Test
+  fun `fold None`() {
+    assertThat(None.fold("0") { it.toString() }).isEqualTo("0")
+  }
+
+  @Test
+  fun `fold Some`() {
+    assertThat(Some(42).fold("0", Int::toString)).isEqualTo("42")
+  }
+
+  @Test
+  fun `foldLeft None`() {
+    assertThat(None.foldLeft("0") { b, a -> b + a }).isEqualTo("0")
+  }
+
+  @Test
+  fun `foldLeft Some`() {
+    assertThat(Some(42).foldLeft("0") { b, a -> b + a}).isEqualTo("042")
+  }
+
+  @Test
+  fun `foldRight None`() {
+    assertThat(None.foldRight("0") { a, b -> b + a }).isEqualTo("0")
+  }
+
+  @Test
+  fun `foldRight Some`() {
+    assertThat(Some(42).foldRight("0") { a, b -> b + a}).isEqualTo("042")
+  }
 }
