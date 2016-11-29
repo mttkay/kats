@@ -39,3 +39,5 @@ class ListContext<out A>(val list: List<A>) : ListKind<A> {
 
   override fun toString(): String = list.toString()
 }
+
+infix fun <A> ListContext<A>.fold(m: Monoid<A>): A = this.list.fold(m)
