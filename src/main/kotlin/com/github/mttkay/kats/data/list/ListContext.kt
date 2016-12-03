@@ -1,18 +1,33 @@
 package com.github.mttkay.kats.data.list
 
 import com.github.mttkay.kats.K1
-import com.github.mttkay.kats.Monoid
-import com.github.mttkay.kats.ext.collection.fold
 
 typealias ListKind<A> = K1<ListContext.F, A>
 
-fun <A> ListKind<A>.narrow(): ListContext<A> = this as ListContext<A>
+@Suppress("UNCHECKED_CAST")
+fun <A> ListKind<A>.narrow(): ListContext<A> =
+    this as ListContext<A>
+
+@Suppress("UNCHECKED_CAST")
+fun <A, G> K1<G, K1<ListContext.F, A>>.narrowInner(): K1<G, ListContext<A>> =
+    this as K1<G, ListContext<A>>
 
 class ListContext<out A>(val list: List<A>) : ListKind<A> {
 
   class F {}
 
+  companion object {
+
+    private val emptyInstance = ListContext<Any>()
+
+    @Suppress("UNCHECKED_CAST")
+    fun <A> empty(): ListContext<A> = emptyInstance as ListContext<A>
+
+  }
+
   constructor(vararg values: A) : this(values.toList())
+
+  constructor(head: A, tail: List<A>) : this(listOf(head) + tail)
 
   infix fun <B> fmap(f: (A) -> B): ListContext<B> = ListFunctor.fmap(this, f)
 
@@ -39,5 +54,3 @@ class ListContext<out A>(val list: List<A>) : ListKind<A> {
 
   override fun toString(): String = list.toString()
 }
-
-infix fun <A> ListContext<A>.fold(m: Monoid<A>): A = this.list.fold(m)

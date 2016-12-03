@@ -52,11 +52,11 @@ sealed class Option<out A> : OptionKind<A> {
       is None -> null
     }
 
-  fun <B> fmap(f: (A) -> B): Option<B> = OptionFunctor.fmap(this, f)
+  infix fun <B> fmap(f: (A) -> B): Option<B> = OptionFunctor.fmap(this, f)
 
-  fun <B> map(f: (A) -> B): B? = fmap(f).orNull
+  infix fun <B> map(f: (A) -> B): B? = fmap(f).orNull
 
-  fun <B> flatMap(f: (A) -> Option<B>): Option<B> = OptionMonad.flatMap(this, f)
+  infix fun <B> flatMap(f: (A) -> Option<B>): Option<B> = OptionMonad.flatMap(this, f)
 
   fun <B> foldLeft(b: B, f: (B, A) -> B): B = OptionFoldable.foldLeft(this, b, f)
 

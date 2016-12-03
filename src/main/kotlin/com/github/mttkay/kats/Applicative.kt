@@ -38,4 +38,7 @@ interface Applicative<F> : Functor<F>, Cartesian<F> {
       ap(fb, fmap(fa) { a: A -> { b: B -> Pair(a, b) } })
 
   override fun <A, B> fmap(fa: K1<F, A>, f: (A) -> B): K1<F, B> = ap(fa, pure(f))
+
+  fun <A, B, Z> map2(fa: K1<F, A>, fb: K1<F, B>, f: (Pair<A, B>) -> Z): K1<F, Z> =
+      fmap(product(fa, fb), f)
 }
