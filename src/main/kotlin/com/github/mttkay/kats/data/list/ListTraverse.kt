@@ -3,7 +3,7 @@ package com.github.mttkay.kats.data.list
 import com.github.mttkay.kats.*
 import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.OptionApplicative
-import com.github.mttkay.kats.data.option.narrow
+import com.github.mttkay.kats.data.option.narrowOption
 
 object ListTraverse :
     Traverse<ListContext.F>,
@@ -22,11 +22,11 @@ fun <A, B, G> ListContext<K1<G, A>>.traverse(app: Applicative<G>, f: (K1<G, A>) 
     ListTraverse.traverse(this, app, f)
 
 fun <A, B> ListContext<Option<A>>.traverseOption(f: (Option<A>) -> Option<B>): Option<ListContext<B>> =
-    traverse(OptionApplicative) { a: K1<Option.F, A> -> f(a.narrow()) }.narrow()
+    traverse(OptionApplicative) { a: K1<Option.F, A> -> f(a.narrowOption()) }.narrowOption()
 
 fun <A, G> ListContext<K1<G, A>>.sequence(app: Applicative<G>): K1<G, ListContext<A>> =
-    ListTraverse.sequence(this, app).narrowInner()
+    ListTraverse.sequence(this, app).narrowInnerList()
 
 fun <A> ListContext<Option<A>>.sequenceOption(): Option<ListContext<A>> =
-    sequence(OptionApplicative).narrow()
+    sequence(OptionApplicative).narrowOption()
 

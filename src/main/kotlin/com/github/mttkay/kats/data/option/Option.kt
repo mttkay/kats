@@ -4,7 +4,10 @@ import com.github.mttkay.kats.K1
 
 typealias OptionKind<A> = K1<Option.F, A>
 
-fun <A> OptionKind<A>.narrow(): Option<A> = this as Option<A>
+fun <A> OptionKind<A>.narrowOption(): Option<A> = this as Option<A>
+
+@Suppress("UNCHECKED_CAST")
+fun <A, F> K1<F, OptionKind<A>>.narrowInnerOption(): K1<F, Option<A>> = this as K1<F, Option<A>>
 
 sealed class Option<out A> : OptionKind<A> {
 

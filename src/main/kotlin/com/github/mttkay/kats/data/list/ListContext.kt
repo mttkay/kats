@@ -4,12 +4,10 @@ import com.github.mttkay.kats.K1
 
 typealias ListKind<A> = K1<ListContext.F, A>
 
-@Suppress("UNCHECKED_CAST")
-fun <A> ListKind<A>.narrow(): ListContext<A> =
-    this as ListContext<A>
+fun <A> ListKind<A>.narrowList(): ListContext<A> = this as ListContext<A>
 
 @Suppress("UNCHECKED_CAST")
-fun <A, G> K1<G, K1<ListContext.F, A>>.narrowInner(): K1<G, ListContext<A>> =
+fun <A, G> K1<G, K1<ListContext.F, A>>.narrowInnerList(): K1<G, ListContext<A>> =
     this as K1<G, ListContext<A>>
 
 class ListContext<out A>(val list: List<A>) : ListKind<A> {
@@ -22,7 +20,6 @@ class ListContext<out A>(val list: List<A>) : ListKind<A> {
 
     @Suppress("UNCHECKED_CAST")
     fun <A> empty(): ListContext<A> = emptyInstance as ListContext<A>
-
   }
 
   constructor(vararg values: A) : this(values.toList())

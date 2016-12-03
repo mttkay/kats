@@ -5,7 +5,7 @@ import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.Option.None
 import com.github.mttkay.kats.data.option.Option.Some
 import com.github.mttkay.kats.data.option.OptionApplicative
-import com.github.mttkay.kats.data.option.narrow
+import com.github.mttkay.kats.data.option.narrowOption
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -16,7 +16,7 @@ class ListTraverseTest {
     val list = ListContext(Some(1), Some(2), Some(3))
 
     val traverse = list.traverse(OptionApplicative) {
-      it.narrow() fmap Int::toString
+      it.narrowOption() fmap Int::toString
     }
 
     assertThat(traverse).isEqualTo(Some(ListContext("1", "2", "3")))

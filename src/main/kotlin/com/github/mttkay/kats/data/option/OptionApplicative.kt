@@ -9,8 +9,8 @@ object OptionApplicative : Applicative<Option.F> {
   override fun <A> pure(a: A): Option<A> = Some(a)
 
   override fun <A, B> ap(fa: OptionKind<A>, ffa: OptionKind<(A) -> B>): Option<B> {
-    val optionA = fa.narrow()
-    val optionFAB = ffa.narrow()
+    val optionA = fa.narrowOption()
+    val optionFAB = ffa.narrowOption()
     return when (optionA) {
       is Some -> {
         when (optionFAB) {

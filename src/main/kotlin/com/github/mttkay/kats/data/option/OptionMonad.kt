@@ -6,10 +6,10 @@ import com.github.mttkay.kats.Monad
 object OptionMonad : Monad<Option.F>, Applicative<Option.F> by OptionApplicative {
 
   override fun <A, B> flatMap(fa: OptionKind<A>, f: (A) -> OptionKind<B>): Option<B> {
-    val option = fa.narrow()
+    val option = fa.narrowOption()
     return when (option) {
       is Option.None -> Option.None
-      is Option.Some -> f(option.value).narrow()
+      is Option.Some -> f(option.value).narrowOption()
     }
   }
 }
