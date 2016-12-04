@@ -12,8 +12,8 @@ interface EitherSemigroupK<L> : SemigroupK<EitherF<L>> {
   }
 
   override fun <A> combineK(fa1: EitherKind<L, A>, fa2: EitherKind<L, A>): Either<L, A> {
-    val left = fa1.narrow()
-    val right = fa2.narrow()
+    val left = fa1.narrowEither()
+    val right = fa2.narrowEither()
     return when (left) {
       is Either.Right -> left
       is Either.Left -> right

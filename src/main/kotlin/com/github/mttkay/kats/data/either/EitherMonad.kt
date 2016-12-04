@@ -13,10 +13,10 @@ interface EitherMonad<L> : EitherApplicative<L>, Monad<EitherF<L>> {
   }
 
   override fun <A, B> flatMap(fa: EitherKind<L, A>, f: (A) -> EitherKind<L, B>): Either<L, B> {
-    val either = fa.narrow()
+    val either = fa.narrowEither()
     return when (either) {
       is Either.Left -> either.rightCast()
-      is Either.Right -> f(either.value).narrow()
+      is Either.Right -> f(either.value).narrowEither()
     }
   }
 }

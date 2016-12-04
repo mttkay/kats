@@ -22,11 +22,12 @@ fun <A, B, G> ListContext<K1<G, A>>.traverse(app: Applicative<G>, f: (K1<G, A>) 
     ListTraverse.traverse(this, app, f)
 
 fun <A, B> ListContext<Option<A>>.traverseOption(f: (Option<A>) -> Option<B>): Option<ListContext<B>> =
-    traverse(OptionApplicative) { a: K1<Option.F, A> -> f(a.narrowOption()) }.narrowOption()
+    traverse(OptionApplicative) {
+      f(it.narrowOption())
+    }.narrowOption()
 
 fun <A, G> ListContext<K1<G, A>>.sequence(app: Applicative<G>): K1<G, ListContext<A>> =
     ListTraverse.sequence(this, app).narrowInnerList()
 
 fun <A> ListContext<Option<A>>.sequenceOption(): Option<ListContext<A>> =
     sequence(OptionApplicative).narrowOption()
-

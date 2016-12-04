@@ -13,7 +13,7 @@ interface EitherFoldable<in L> : Foldable<EitherF<L>> {
   }
 
   override fun <A, B> foldLeft(fa: EitherKind<L, A>, b: B, f: (B, A) -> B): B {
-    val either = fa.narrow()
+    val either = fa.narrowEither()
     return when (either) {
       is Either.Left -> b
       is Either.Right -> f(b, either.value)
@@ -21,7 +21,7 @@ interface EitherFoldable<in L> : Foldable<EitherF<L>> {
   }
 
   override fun <A, B> foldRight(fa: EitherKind<L, A>, b: B, f: (A, B) -> B): B {
-    val either = fa.narrow()
+    val either = fa.narrowEither()
     return when (either) {
       is Either.Left -> b
       is Either.Right -> f(either.value, b)

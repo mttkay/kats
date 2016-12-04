@@ -12,7 +12,7 @@ interface EitherFunctor<L> : Functor<EitherF<L>> {
   }
 
   override fun <R, S> fmap(fa: EitherKind<L, R>, f: (R) -> S): Either<L, S> {
-    val either = fa.narrow()
+    val either = fa.narrowEither()
     return when (either) {
       is Either.Left -> Either.Left(either.value)
       is Either.Right -> Either.Right(f(either.value))

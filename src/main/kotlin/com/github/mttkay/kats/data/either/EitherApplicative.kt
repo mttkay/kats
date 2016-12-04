@@ -16,8 +16,8 @@ interface EitherApplicative<L> : Applicative<EitherF<L>> {
   override fun <A> pure(a: A): Either<L, A> = Right(a)
 
   override fun <A, B> ap(fa: EitherKind<L, A>, ffa: EitherKind<L, (A) -> B>): Either<L, B> {
-    val eitherLA = fa.narrow()
-    val eitherFAB = ffa.narrow()
+    val eitherLA = fa.narrowEither()
+    val eitherFAB = ffa.narrowEither()
     return when (eitherLA) {
       is Right -> {
         when (eitherFAB) {
