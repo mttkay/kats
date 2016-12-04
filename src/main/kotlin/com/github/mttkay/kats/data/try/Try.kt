@@ -2,6 +2,13 @@ package com.github.mttkay.kats.data.`try`
 
 import com.github.mttkay.kats.K1
 import com.github.mttkay.kats.data.`try`.Try.Failure
+import com.github.mttkay.kats.data.`try`.Try.Success
+import com.github.mttkay.kats.data.either.Either
+import com.github.mttkay.kats.data.either.Either.Left
+import com.github.mttkay.kats.data.either.Either.Right
+import com.github.mttkay.kats.data.option.Option
+import com.github.mttkay.kats.data.option.Option.None
+import com.github.mttkay.kats.data.option.Option.Some
 
 typealias TryKind<A> = K1<Try.F, A>
 
@@ -14,10 +21,19 @@ sealed class Try<out A> : TryKind<A> {
   class F
 
   companion object {
+    inline fun <A> run(f: () -> A): Try<A> =
+        try {
+          Success(f())
+        } catch (e: Throwable) {
+          //TODO: don't catch fatal errors
+          Failure(e)
+        }
+
     inline fun <A, B> run(a: A, f: (A) -> B): Try<B> =
         try {
           Success(f(a))
         } catch (e: Throwable) {
+          //TODO: don't catch fatal errors
           Failure(e)
         }
   }
@@ -91,7 +107,18 @@ sealed class Try<out A> : TryKind<A> {
 }
 
 inline fun <A> Try<A>.getOrElse(default: () -> A) =
+    if (isSuccess) get else default()
+
+fun <A> Try<A>.toEither(): Either<Throwable, A> =
     when (this) {
-      is Try.Success -> this.value
-      is Failure -> default()
+      is Failure -> Left(exception)
+      is Success -> Right(value)
     }
+
+inline fun <L, R> Try<R>.toEither(mapError: (Throwable) -> L): Either<L, R> =
+    when (this) {
+      is Failure -> Left(mapError(exception))
+      is Success -> Right(value)
+    }
+
+fun <A> Try<A>.toOption(): Option<A> = if (isSuccess) Some(get) else None
