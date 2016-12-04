@@ -38,10 +38,10 @@ class ListApplicativeTest {
   }
 
   @Test
-  fun `fmap`() {
+  fun `map`() {
     val fa = ListContext(listOf(1, 2, 3))
 
-    val mapped = ListApplicative.fmap(fa) { it * 2 }
+    val mapped = ListApplicative.map(fa) { it * 2 }
 
     assertThat(mapped).isEqualTo(ListContext(listOf(2, 4, 6)))
   }

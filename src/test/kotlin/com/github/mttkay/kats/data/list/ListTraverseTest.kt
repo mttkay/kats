@@ -16,7 +16,7 @@ class ListTraverseTest {
     val list = ListContext(Some(1), Some(2), Some(3))
 
     val traverse = list.traverse(OptionApplicative) {
-      it.narrowOption() fmap Int::toString
+      it.narrowOption() map Int::toString
     }
 
     assertThat(traverse).isEqualTo(Some(ListContext("1", "2", "3")))
@@ -27,7 +27,7 @@ class ListTraverseTest {
     val list = ListContext(Some(1), Some(2), Some(3))
 
     val traverse: Option<ListContext<String>> = list.traverseOption {
-      it fmap Int::toString
+      it map Int::toString
     }
 
     assertThat(traverse).isEqualTo(Some(ListContext("1", "2", "3")))
@@ -38,7 +38,7 @@ class ListTraverseTest {
     val list = listOf(Some(1), Some(2), Some(3))
 
     val traverse: Option<List<String>> = list.traverseOption {
-      it fmap Int::toString
+      it map Int::toString
     }
 
     assertThat(traverse).isEqualTo(Some(listOf("1", "2", "3")))

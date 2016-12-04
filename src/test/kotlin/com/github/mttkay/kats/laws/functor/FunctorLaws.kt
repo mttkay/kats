@@ -26,19 +26,19 @@ interface FunctorLaws<F, out K : K1<F, A>> {
   /**
    * Preserves identity:
    *
-   * fmap id = id
+   * map id = id
    */
   @Test
   fun `covariant identity`() =
-      functor.fmap(fa, this::id) mustEqual fa
+      functor.map(fa, this::id) mustEqual fa
 
   /**
    * Preserves composition:
    *
-   * (fmap g) o (fmap f) = fmap (g o f)
+   * (map g) o (map f) = map (g o f)
    */
   @Test
   fun `covariant composition`() =
-      functor.fmap(functor.fmap(fa, ::f), ::g) mustEqual functor.fmap(fa, ::g compose ::f)
+      functor.map(functor.map(fa, ::f), ::g) mustEqual functor.map(fa, ::g compose ::f)
 
 }

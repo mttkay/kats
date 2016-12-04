@@ -18,7 +18,7 @@ object OptionTraverse :
     val option = fa.narrowOption()
     return when (option) {
       is None -> app.pure(None)
-      is Some -> app.fmap(f(option.value)) { Some(it) }
+      is Some -> app.map(f(option.value)) { Some(it) }
     }
   }
 }
@@ -33,7 +33,7 @@ fun <A, B> Option<ListContext<A>>.traverseList(f: (ListContext<A>) -> ListContex
 
 // TODO: there's an awful lot of back and forth here; look into simplifying this
 fun <A, B> Option<List<A>>.traverseList(f: (List<A>) -> List<B>): List<Option<B>> =
-    fmap { it.liftList() }.traverse(ListApplicative) { a: ListKind<A> ->
+    map { it.liftList() }.traverse(ListApplicative) { a: ListKind<A> ->
       f(a.narrowList().list).liftList()
     }.narrowList().list
 
@@ -44,4 +44,4 @@ fun <A> Option<ListContext<A>>.sequenceList(): ListContext<Option<A>> =
     sequence(ListApplicative).narrowList()
 
 fun <A> Option<List<A>>.sequenceList(): List<Option<A>> =
-    fmap { it.liftList() }.sequence(ListApplicative).narrowList().list
+    map { it.liftList() }.sequence(ListApplicative).narrowList().list

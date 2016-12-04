@@ -8,8 +8,8 @@ class ListContextTest {
   val list = ListContext(1, 2, 3)
 
   @Test
-  fun `fmap`() {
-    assertThat(list.fmap { it * 2 }).isEqualTo(ListContext(2, 4, 6))
+  fun `map`() {
+    assertThat(list.map { it * 2 }).isEqualTo(ListContext(2, 4, 6))
   }
 
   @Test

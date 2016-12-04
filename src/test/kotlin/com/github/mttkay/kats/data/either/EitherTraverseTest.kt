@@ -16,7 +16,7 @@ class EitherTraverseTest {
   @Test
   fun `traverse Left`() {
     val traverse = either.left(0).traverse(OptionApplicative) {
-      it.narrowOption() fmap Int::toString
+      it.narrowOption() map Int::toString
     }
 
     assertThat(traverse).isEqualTo(Some(either.left(0)))
@@ -25,7 +25,7 @@ class EitherTraverseTest {
   @Test
   fun `traverse Right`() {
     val traverse = either.right(Some(42)).traverse(OptionApplicative) {
-      it.narrowOption() fmap Int::toString
+      it.narrowOption() map Int::toString
     }
 
     assertThat(traverse).isEqualTo(Some(Right<Int, String>("42")))
@@ -34,7 +34,7 @@ class EitherTraverseTest {
   @Test
   fun `traverseOption`() {
     val traverse = Right<Nothing, Option<Int>>(Some(42)).traverseOption {
-      it fmap Int::toString
+      it map Int::toString
     }
 
     assertThat(traverse).isEqualTo(Some(Right<Nothing, String>("42")))
@@ -43,7 +43,7 @@ class EitherTraverseTest {
   @Test
   fun `traverseList`() {
     val traverse = Right<Nothing, ListContext<Int>>(ListContext(1, 2, 3)).traverseList {
-      it fmap Int::toString
+      it map Int::toString
     }
 
     assertThat(traverse).isEqualTo(ListContext(

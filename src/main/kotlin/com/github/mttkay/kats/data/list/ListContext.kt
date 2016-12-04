@@ -26,7 +26,7 @@ class ListContext<out A>(val list: List<A>) : ListKind<A> {
 
   constructor(head: A, tail: List<A>) : this(listOf(head) + tail)
 
-  infix fun <B> fmap(f: (A) -> B): ListContext<B> = ListFunctor.fmap(this, f)
+  infix fun <B> map(f: (A) -> B): ListContext<B> = ListFunctor.map(this, f)
 
   infix fun <B> flatMap(f: (A) -> ListContext<B>): ListContext<B> = ListMonad.flatMap(this, f)
 

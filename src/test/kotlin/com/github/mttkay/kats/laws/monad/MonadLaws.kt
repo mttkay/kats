@@ -38,5 +38,5 @@ abstract class MonadLaws<F, out K : K1<F, A>>(val m: Monad<F>) : ApplicativeLaws
 
   @Test
   fun `map - flatMap coherence`() =
-    m.flatMap(fa) { m.pure(f(it)) } mustEqual m.fmap(fa, ::f)
+    m.flatMap(fa) { m.pure(f(it)) } mustEqual m.map(fa, ::f)
 }

@@ -29,7 +29,7 @@ class EitherTraverse<L> :
     val either = fa.narrowEither()
     return when (either) {
       is Left -> app.pure(either.rightCast())
-      is Right -> app.fmap(f(either.value)) { Right<L, B>(it) }
+      is Right -> app.map(f(either.value)) { Right<L, B>(it) }
     }
   }
 }
@@ -43,7 +43,7 @@ fun <L, A, B> Either<L, ListContext<A>>.traverseList(f: (ListContext<A>) -> List
     }.narrowList()
 
 fun <L, A, B> Either<L, List<A>>.traverseList(f: (List<A>) -> List<B>): List<Either<L, B>> =
-    fmap { it.liftList() }.traverse(ListApplicative) { a: ListKind<A> ->
+    map { it.liftList() }.traverse(ListApplicative) { a: ListKind<A> ->
       f(a.narrowList().list).liftList()
     }.narrowList().list
 
@@ -59,7 +59,7 @@ fun <L, A> Either<L, ListContext<A>>.sequenceList(): ListContext<Either<L, A>> =
     sequence(ListApplicative).narrowList()
 
 fun <L, A> Either<L, List<A>>.sequenceList(): List<Either<L, A>> =
-    fmap { it.liftList() }.sequence(ListApplicative).narrowList().list
+    map { it.liftList() }.sequence(ListApplicative).narrowList().list
 
 fun <L, A> Either<L, Option<A>>.sequenceOption(): Option<Either<L, A>> =
     sequence(OptionApplicative).narrowOption()

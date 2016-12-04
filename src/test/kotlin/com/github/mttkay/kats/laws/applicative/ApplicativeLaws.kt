@@ -47,17 +47,17 @@ interface ApplicativeLaws<F, out K : K1<F, A>> {
    *
    * Then
    *
-   * fbc.ap(fab.ap(fa)) <=> fbc.fmap(f).ap(fab).ap(fa)
+   * fbc.ap(fab.ap(fa)) <=> fbc.map(f).ap(fab).ap(fa)
    */
   @Test
   fun `ap composition`() {
     val compose: ((B) -> C) -> ((A) -> B) -> (A) -> C = { bc -> { ab -> bc compose ab } }
 
-    app.ap(app.ap(fa, fab), fbc) mustEqual app.ap(fa, app.ap(fab, app.fmap(fbc, compose)))
+    app.ap(app.ap(fa, fab), fbc) mustEqual app.ap(fa, app.ap(fab, app.map(fbc, compose)))
   }
 
   @Test
-  fun `ap fmap`() =
-      app.ap(fa, app.pure(::f)) mustEqual app.fmap(fa, ::f)
+  fun `ap map`() =
+      app.ap(fa, app.pure(::f)) mustEqual app.map(fa, ::f)
 
 }

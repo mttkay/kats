@@ -22,5 +22,5 @@ fun Iterable<Double?>.fold(): Double? = fold(AddNullableDoubleMonoid)
 
 fun <A> Iterable<A>.liftList(): ListContext<A> = ListContext(this.toList())
 
-fun <A, B> Iterable<Option<A>>.mapOption(f: (A) -> B): List<Option<B>> = this.map { it.fmap(f) }
+fun <A, B> Iterable<Option<A>>.mapOption(f: (A) -> B): List<Option<B>> = this.map { it.map(f) }
 inline fun <A, B> Iterable<A?>.mapNullable(f: (A) -> B): List<B?> = this.map { it?.let(f) }

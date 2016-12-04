@@ -55,9 +55,7 @@ sealed class Option<out A> : OptionKind<A> {
       is None -> null
     }
 
-  infix fun <B> fmap(f: (A) -> B): Option<B> = OptionFunctor.fmap(this, f)
-
-  infix fun <B> map(f: (A) -> B): B? = fmap(f).orNull
+  infix fun <B> map(f: (A) -> B): Option<B> = OptionFunctor.map(this, f)
 
   infix fun <B> flatMap(f: (A) -> Option<B>): Option<B> = OptionMonad.flatMap(this, f)
 

@@ -11,7 +11,7 @@ interface EitherFunctor<L> : Functor<EitherF<L>> {
     fun <L> instance(): EitherFunctor<L> = functorInstance as EitherFunctor<L>
   }
 
-  override fun <R, S> fmap(fa: EitherKind<L, R>, f: (R) -> S): Either<L, S> {
+  override fun <R, S> map(fa: EitherKind<L, R>, f: (R) -> S): Either<L, S> {
     val either = fa.narrowEither()
     return when (either) {
       is Either.Left -> Either.Left(either.value)

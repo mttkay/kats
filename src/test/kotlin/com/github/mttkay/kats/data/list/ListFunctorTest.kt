@@ -9,8 +9,8 @@ class ListFunctorTest {
   val liftedList = listOf(1, 2, 3).liftList()
 
   @Test
-  fun `fmap maps lists in ListContext`() {
-    val ctx: ListContext<String> = liftedList.fmap(Int::toString)
+  fun `map maps lists in ListContext`() {
+    val ctx: ListContext<String> = liftedList.map(Int::toString)
 
     assertThat(ctx.list).containsExactly("1", "2", "3")
   }

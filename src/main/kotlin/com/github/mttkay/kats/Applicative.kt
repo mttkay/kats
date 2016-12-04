@@ -5,7 +5,7 @@ package com.github.mttkay.kats
  *
  * Given a context `F`, and types `A` and `(A) -> B` in `F`,
  * [ap] describes how to obtain `B` in `F`. With the help of [pure], we can lift
- * "raw" values of some `A` into `F`. If `A` is a function type, we get [fmap],
+ * "raw" values of some `A` into `F`. If `A` is a function type, we get [map],
  * i.e. a functor instance, for free.
  *
  * [Applicative] also affords us with the ability to generalize the creation of
@@ -35,10 +35,10 @@ interface Applicative<F> : Functor<F>, Cartesian<F> {
   fun <A, B> ap(fa: K1<F, A>, ffa: K1<F, (A) -> B>): K1<F, B>
 
   override fun <A, B> product(fa: K1<F, A>, fb: K1<F, B>): K1<F, Pair<A, B>> =
-      ap(fb, fmap(fa) { a: A -> { b: B -> Pair(a, b) } })
+      ap(fb, map(fa) { a: A -> { b: B -> Pair(a, b) } })
 
-  override fun <A, B> fmap(fa: K1<F, A>, f: (A) -> B): K1<F, B> = ap(fa, pure(f))
+  override fun <A, B> map(fa: K1<F, A>, f: (A) -> B): K1<F, B> = ap(fa, pure(f))
 
   fun <A, B, Z> map2(fa: K1<F, A>, fb: K1<F, B>, f: (Pair<A, B>) -> Z): K1<F, Z> =
-      fmap(product(fa, fb), f)
+      map(product(fa, fb), f)
 }

@@ -28,7 +28,7 @@ fun <A, B> ListContext<Option<A>>.traverseOption(f: (Option<A>) -> Option<B>): O
     }.narrowOption()
 
 fun <A, B> List<Option<A>>.traverseOption(f: (Option<A>) -> Option<B>): Option<List<B>> =
-    liftList().traverseOption(f).fmap { it.list }
+    liftList().traverseOption(f).map { it.list }
 
 fun <A, G> ListContext<K1<G, A>>.sequence(app: Applicative<G>): K1<G, ListContext<A>> =
     ListTraverse.sequence(this, app).narrowInnerList()
@@ -37,4 +37,4 @@ fun <A> ListContext<Option<A>>.sequenceOption(): Option<ListContext<A>> =
     sequence(OptionApplicative).narrowOption()
 
 fun <A> List<Option<A>>.sequenceOption(): Option<List<A>> =
-    liftList().sequence(OptionApplicative).narrowOption().fmap { it.list }
+    liftList().sequence(OptionApplicative).narrowOption().map { it.list }
