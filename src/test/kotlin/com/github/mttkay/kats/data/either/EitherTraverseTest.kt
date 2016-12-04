@@ -54,6 +54,19 @@ class EitherTraverseTest {
   }
 
   @Test
+  fun `native traverseList`() {
+    val traverse = Right<Nothing, List<Int>>(listOf(1, 2, 3)).traverseList {
+      it.map(Int::toString)
+    }
+
+    assertThat(traverse).isEqualTo(listOf(
+        Right<Nothing, String>("1"),
+        Right<Nothing, String>("2"),
+        Right<Nothing, String>("3")
+    ))
+  }
+
+  @Test
   fun `sequenceOption`() {
     val sequence = Right<Nothing, Option<Int>>(Some(42)).sequenceOption()
 
@@ -65,6 +78,17 @@ class EitherTraverseTest {
     val sequence = Right<Nothing, ListContext<Int>>(ListContext(1, 2, 3)).sequenceList()
 
     assertThat(sequence).isEqualTo(ListContext(
+        Right<Nothing, Int>(1),
+        Right<Nothing, Int>(2),
+        Right<Nothing, Int>(3)
+    ))
+  }
+
+  @Test
+  fun `native sequenceList`() {
+    val sequence = Right<Nothing, List<Int>>(listOf(1, 2, 3)).sequenceList()
+
+    assertThat(sequence).isEqualTo(listOf(
         Right<Nothing, Int>(1),
         Right<Nothing, Int>(2),
         Right<Nothing, Int>(3)

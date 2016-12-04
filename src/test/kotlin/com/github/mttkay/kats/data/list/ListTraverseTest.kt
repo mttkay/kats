@@ -34,6 +34,17 @@ class ListTraverseTest {
   }
 
   @Test
+  fun `native traverseOption`() {
+    val list = listOf(Some(1), Some(2), Some(3))
+
+    val traverse: Option<List<String>> = list.traverseOption {
+      it fmap Int::toString
+    }
+
+    assertThat(traverse).isEqualTo(Some(listOf("1", "2", "3")))
+  }
+
+  @Test
   fun `sequence Some`() {
     val list = ListContext(Some(1), Some(2), Some(3))
 
@@ -58,6 +69,15 @@ class ListTraverseTest {
     val sequence: Option<ListContext<Int>> = list.sequenceOption()
 
     assertThat(sequence).isEqualTo(Some(ListContext(1, 2, 3)))
+  }
+
+  @Test
+  fun `native sequenceOption`() {
+    val list = listOf(Some(1), Some(2), Some(3))
+
+    val sequence: Option<List<Int>> = list.sequenceOption()
+
+    assertThat(sequence).isEqualTo(Some(listOf(1, 2, 3)))
   }
 
 }

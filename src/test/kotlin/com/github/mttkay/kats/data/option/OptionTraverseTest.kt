@@ -42,6 +42,15 @@ class OptionTraverseTest {
   }
 
   @Test
+  fun `native traverseList`() {
+    val some: Option<List<Int>> = Some(listOf(1, 2, 3))
+
+    val traverse = some.traverseList { it.map(Int::toString) }
+
+    assertThat(traverse).isEqualTo(listOf(Some("1"), Some("2"), Some("3")))
+  }
+
+  @Test
   fun `sequence`() {
     val sequence = Some(ListContext(1, 2, 3)).sequence(ListApplicative)
 
@@ -53,5 +62,12 @@ class OptionTraverseTest {
     val sequence = Some(ListContext(1, 2, 3)).sequenceList()
 
     assertThat(sequence).isEqualTo(ListContext(Some(1), Some(2), Some(3)))
+  }
+
+  @Test
+  fun `native sequenceList`() {
+    val sequence = Some(listOf(1, 2, 3)).sequenceList()
+
+    assertThat(sequence).isEqualTo(listOf(Some(1), Some(2), Some(3)))
   }
 }
