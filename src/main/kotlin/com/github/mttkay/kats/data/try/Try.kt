@@ -28,7 +28,9 @@ sealed class Try<out A> : TryKind<A> {
 
   abstract val get: A
 
-  abstract infix fun <B> map(f: (A) -> B): Try<B>
+  infix fun <B> map(f: (A) -> B): Try<B> = TryFunctor.map(this, f)
+
+  infix fun <B> flatMap(f: (A) -> Try<B>): Try<B> = TryMonad.flatMap(this, f)
 
   class Success<out A>(val value: A) : Try<A>() {
 
@@ -37,9 +39,6 @@ sealed class Try<out A> : TryKind<A> {
     override val isSuccess = true
 
     override val get: A = value
-
-    override fun <B> map(f: (A) -> B): Try<B> =
-        Try.run(value, f)
 
     override fun equals(other: Any?): Boolean {
       if (this === other) return true
@@ -69,8 +68,6 @@ sealed class Try<out A> : TryKind<A> {
 
     override val get: A
       get() = throw exception
-
-    override fun <B> map(f: (A) -> B): Try<B> = this.cast()
 
     override fun equals(other: Any?): Boolean {
       if (this === other) return true
