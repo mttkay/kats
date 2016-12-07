@@ -7,10 +7,13 @@ typealias EitherKind<L, R> = K1<EitherF<L>, R>
 
 @Suppress("UNCHECKED_CAST")
 fun <L, R> EitherKind<L, R>.narrowEither() = this as Either<L, R>
+
 @Suppress("UNCHECKED_CAST")
 fun <L, R, F> K1<F, EitherKind<L, R>>.narrowInnerEither() = this as K1<F, Either<L, R>>
+
 @Suppress("UNCHECKED_CAST") // safe, because operates on Right
 fun <L, R> Either.Right<*, R>.leftCast() = this as Either.Right<L, R>
+
 @Suppress("UNCHECKED_CAST") // safe, because operates on Left
 fun <L, R> Either.Left<L, *>.rightCast() = this as Either.Left<L, R>
 
@@ -70,9 +73,9 @@ sealed class Either<L, out R> : EitherKind<L, R> {
 
   abstract val isRight: Boolean
 
-  fun <S> map(f: (R) -> S): Either<L, S> = EitherFunctor.instance<L>().map(this, f)
+  infix fun <S> map(f: (R) -> S): Either<L, S> = EitherFunctor.instance<L>().map(this, f)
 
-  fun <S> flatMap(f: (R) -> Either<L, S>): Either<L, S> = EitherMonad.instance<L>().flatMap(this, f)
+  infix fun <S> flatMap(f: (R) -> Either<L, S>): Either<L, S> = EitherMonad.instance<L>().flatMap(this, f)
 
   fun <S> foldLeft(s: S, f: (S, R) -> S): S = EitherFoldable.instance<L>().foldLeft(this, s, f)
 
