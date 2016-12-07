@@ -1,11 +1,16 @@
 package com.github.mttkay.kats.data.list
 
 import com.github.mttkay.kats.K1
+import com.github.mttkay.kats.data.either.Either
+import com.github.mttkay.kats.data.either.Either.Right
 import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.Option.None
 import com.github.mttkay.kats.data.option.Option.Some
 import com.github.mttkay.kats.data.option.OptionApplicative
 import com.github.mttkay.kats.data.option.narrowOption
+import com.github.mttkay.kats.ext.list.sequenceEither
+import com.github.mttkay.kats.ext.list.sequenceOption
+import com.github.mttkay.kats.ext.list.traverseOption
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -80,4 +85,29 @@ class ListTraverseTest {
     assertThat(sequence).isEqualTo(Some(listOf(1, 2, 3)))
   }
 
+  @Test
+  fun `sequenceEither`() {
+    val list = ListContext(
+        Right<Nothing, Int>(1),
+        Right<Nothing, Int>(2),
+        Right<Nothing, Int>(3)
+    )
+
+    val sequence: Either<Nothing, ListContext<Int>> = list.sequenceEither()
+
+    assertThat(sequence).isEqualTo(Right<Nothing, ListContext<Int>>(ListContext(1, 2, 3)))
+  }
+
+  @Test
+  fun `native sequenceEither`() {
+    val list = listOf(
+        Right<Nothing, Int>(1),
+        Right<Nothing, Int>(2),
+        Right<Nothing, Int>(3)
+    )
+
+    val sequence: Either<Nothing, List<Int>> = list.sequenceEither()
+
+    assertThat(sequence).isEqualTo(Right<Nothing, List<Int>>(listOf(1, 2, 3)))
+  }
 }
