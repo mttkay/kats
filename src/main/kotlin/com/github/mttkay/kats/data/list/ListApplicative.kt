@@ -15,3 +15,8 @@ object ListApplicative : Applicative<ListContext.F> {
       ffa.flatMap { f -> fa.map(f) }
 
 }
+
+infix fun <A, B> ListContext<A>.product(that: ListContext<B>): ListContext<Pair<A, B>> =
+    ListMonad.product(this, that).narrowList()
+
+infix operator fun <A, B> ListContext<A>.times(that: ListContext<B>): ListContext<Pair<A, B>> = product(that)

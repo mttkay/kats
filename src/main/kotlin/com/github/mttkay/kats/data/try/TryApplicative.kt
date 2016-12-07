@@ -20,3 +20,8 @@ object TryApplicative : Applicative<Try.F> {
     }
   }
 }
+
+infix fun <A, B> Try<A>.product(that: Try<B>): Try<Pair<A, B>> =
+    TryApplicative.product(this, that).narrowTry()
+
+infix operator fun <A, B> Try<A>.times(that: Try<B>): Try<Pair<A, B>> = product(that)

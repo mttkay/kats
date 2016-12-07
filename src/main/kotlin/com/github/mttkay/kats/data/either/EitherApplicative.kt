@@ -29,3 +29,8 @@ interface EitherApplicative<L> : Applicative<EitherF<L>> {
     }
   }
 }
+
+infix fun <L, R, S> Either<L, R>.product(other: Either<L, S>): Either<L, Pair<R, S>> =
+    EitherMonad.instance<L>().product(this, other).narrowEither()
+
+infix operator fun <L, R, S> Either<L, R>.times(other: Either<L, S>) = product(other)

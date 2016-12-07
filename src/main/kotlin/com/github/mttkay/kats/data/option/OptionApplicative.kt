@@ -22,3 +22,8 @@ object OptionApplicative : Applicative<Option.F> {
     }
   }
 }
+
+infix fun <A, B> Option<A>.product(that: Option<B>): Option<Pair<A, B>> =
+    OptionApplicative.product(this, that).narrowOption()
+
+infix operator fun <A, B> Option<A>.times(that: Option<B>): Option<Pair<A, B>> = product(that)
