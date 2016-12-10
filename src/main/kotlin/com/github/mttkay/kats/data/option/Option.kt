@@ -59,10 +59,6 @@ sealed class Option<out A> : OptionKind<A> {
 
   infix fun <B> flatMap(f: (A) -> Option<B>): Option<B> = OptionMonad.flatMap(this, f)
 
-  fun <B> foldLeft(b: B, f: (B, A) -> B): B = OptionFoldable.foldLeft(this, b, f)
-
-  fun <B> foldRight(b: B, f: (A, B) -> B): B = OptionFoldable.foldRight(this, b, f)
-
   inline fun <B> fold(ifEmpty: B, f: (A) -> B): B = when (this) {
     is Option.Some -> f(value)
     is Option.None -> ifEmpty

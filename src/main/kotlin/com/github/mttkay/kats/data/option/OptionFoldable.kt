@@ -21,3 +21,7 @@ object OptionFoldable : Foldable<Option.F> {
     }
   }
 }
+
+fun <A, B> Option<A>.foldLeft(b: B, f: (B, A) -> B): B = OptionFoldable.foldLeft(this, b, f)
+
+fun <A, B> Option<A>.foldRight(b: B, f: (A, B) -> B): B = OptionFoldable.foldRight(this, b, f)

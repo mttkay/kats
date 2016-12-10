@@ -1,8 +1,6 @@
 package com.github.mttkay.kats.data.list
 
 import com.github.mttkay.kats.Foldable
-import com.github.mttkay.kats.Monoid
-import com.github.mttkay.kats.ext.collection.fold
 
 
 object ListFoldable : Foldable<ListContext.F> {
@@ -14,4 +12,6 @@ object ListFoldable : Foldable<ListContext.F> {
       fa.narrowList().list.foldRight(b, f)
 }
 
-infix fun <A> ListContext<A>.fold(m: Monoid<A>): A = this.list.fold(m)
+fun <A, B> ListContext<A>.foldLeft(b: B, f: (B, A) -> B): B = ListFoldable.foldLeft(this, b, f)
+
+fun <A, B> ListContext<A>.foldRight(b: B, f: (A, B) -> B): B = ListFoldable.foldRight(this, b, f)

@@ -28,3 +28,7 @@ interface EitherFoldable<in L> : Foldable<EitherF<L>> {
     }
   }
 }
+
+fun <L, R, S> Either<L, R>.foldLeft(s: S, f: (S, R) -> S): S = EitherFoldable.instance<L>().foldLeft(this, s, f)
+
+fun <L, R, S> Either<L, R>.foldRight(s: S, f: (R, S) -> S): S = EitherFoldable.instance<L>().foldRight(this, s, f)

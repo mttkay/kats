@@ -77,7 +77,8 @@ sealed class Either<L, out R> : EitherKind<L, R> {
 
   infix fun <S> flatMap(f: (R) -> Either<L, S>): Either<L, S> = EitherMonad.instance<L>().flatMap(this, f)
 
-  fun <S> foldLeft(s: S, f: (S, R) -> S): S = EitherFoldable.instance<L>().foldLeft(this, s, f)
-
-  fun <S> foldRight(s: S, f: (R, S) -> S): S = EitherFoldable.instance<L>().foldRight(this, s, f)
+  fun <S> fold(ifLeft: S, f: (R) -> S): S = when (this) {
+    is Left -> ifLeft
+    is Right -> f(value)
+  }
 }
