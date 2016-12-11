@@ -13,6 +13,10 @@ object OptionFunctor : Functor<Option.F> {
   }
 }
 
+infix fun <A, B> Option<A>.map(f: (A) -> B): Option<B> = OptionFunctor.map(this, f)
+
+infix fun <A, B> Option<A>.flatMap(f: (A) -> Option<B>): Option<B> = OptionMonad.flatMap(this, f)
+
 fun <A, B> Option<A>.fproduct(f: (A) -> B): Option<Pair<A, B>> =
     OptionFunctor.fproduct(this, f).narrowOption()
 

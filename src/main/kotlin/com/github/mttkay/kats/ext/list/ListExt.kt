@@ -9,6 +9,7 @@ import com.github.mttkay.kats.data.either.narrowEither
 import com.github.mttkay.kats.data.list.*
 import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.OptionApplicative
+import com.github.mttkay.kats.data.option.map
 import com.github.mttkay.kats.data.option.narrowOption
 import com.github.mttkay.kats.ext.collection.liftList
 

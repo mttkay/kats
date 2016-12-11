@@ -3,6 +3,7 @@ package com.github.mttkay.kats.ext.collection
 import com.github.mttkay.kats.Monoid
 import com.github.mttkay.kats.data.list.ListContext
 import com.github.mttkay.kats.data.option.Option
+import com.github.mttkay.kats.data.option.map
 import com.github.mttkay.kats.predef.*
 
 fun <T> Iterable<T?>.fold(m: Monoid<T>): T =

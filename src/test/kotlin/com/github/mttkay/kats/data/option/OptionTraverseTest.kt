@@ -2,6 +2,7 @@ package com.github.mttkay.kats.data.option
 
 import com.github.mttkay.kats.data.list.ListApplicative
 import com.github.mttkay.kats.data.list.ListContext
+import com.github.mttkay.kats.data.list.map
 import com.github.mttkay.kats.data.list.narrowList
 import com.github.mttkay.kats.data.option.Option.None
 import com.github.mttkay.kats.data.option.Option.Some

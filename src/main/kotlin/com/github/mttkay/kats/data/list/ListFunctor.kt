@@ -13,6 +13,12 @@ object ListFunctor : Functor<ListContext.F> {
   }
 }
 
+infix fun <A, B> ListContext<A>.map(f: (A) -> B): ListContext<B> =
+    ListFunctor.map(this, f)
+
+infix fun <A, B> ListContext<A>.flatMap(f: (A) -> ListContext<B>): ListContext<B> =
+    ListMonad.flatMap(this, f)
+
 fun <A, B> ListContext.Companion.lift(f: (A) -> B): (ListContext<A>) -> ListContext<B> =
     ListFunctor.lift(f).narrowListFn()
 

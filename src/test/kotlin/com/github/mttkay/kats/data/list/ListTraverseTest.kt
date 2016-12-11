@@ -7,6 +7,7 @@ import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.Option.None
 import com.github.mttkay.kats.data.option.Option.Some
 import com.github.mttkay.kats.data.option.OptionApplicative
+import com.github.mttkay.kats.data.option.map
 import com.github.mttkay.kats.data.option.narrowOption
 import com.github.mttkay.kats.ext.list.sequenceEither
 import com.github.mttkay.kats.ext.list.sequenceOption

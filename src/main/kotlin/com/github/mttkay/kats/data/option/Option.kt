@@ -55,10 +55,6 @@ sealed class Option<out A> : OptionKind<A> {
       is None -> null
     }
 
-  infix fun <B> map(f: (A) -> B): Option<B> = OptionFunctor.map(this, f)
-
-  infix fun <B> flatMap(f: (A) -> Option<B>): Option<B> = OptionMonad.flatMap(this, f)
-
   inline fun <B> fold(ifEmpty: B, f: (A) -> B): B = when (this) {
     is Option.Some -> f(value)
     is Option.None -> ifEmpty

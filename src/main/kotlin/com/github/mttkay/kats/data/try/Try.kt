@@ -44,10 +44,6 @@ sealed class Try<out A> : TryKind<A> {
 
   abstract val get: A
 
-  infix fun <B> map(f: (A) -> B): Try<B> = TryFunctor.map(this, f)
-
-  infix fun <B> flatMap(f: (A) -> Try<B>): Try<B> = TryMonad.flatMap(this, f)
-
   class Success<out A>(val value: A) : Try<A>() {
 
     override val isFailure = false
