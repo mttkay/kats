@@ -1,6 +1,7 @@
 package com.github.mttkay.kats.data.either
 
 import com.github.mttkay.kats.Foldable
+import com.github.mttkay.kats.Monoid
 
 interface EitherFoldable<in L> : Foldable<EitherF<L>> {
 
@@ -29,6 +30,10 @@ interface EitherFoldable<in L> : Foldable<EitherF<L>> {
   }
 }
 
+fun <L, R> Either<L, R>.fold(m: Monoid<R>): R = EitherFoldable.instance<L>().fold(this, m)
+
 fun <L, R, S> Either<L, R>.foldLeft(s: S, f: (S, R) -> S): S = EitherFoldable.instance<L>().foldLeft(this, s, f)
 
 fun <L, R, S> Either<L, R>.foldRight(s: S, f: (R, S) -> S): S = EitherFoldable.instance<L>().foldRight(this, s, f)
+
+fun <L, R, S> Either<L, R>.foldMap(m: Monoid<S>, f: (R) -> S): S = EitherFoldable.instance<L>().foldMap(this, m, f)

@@ -2,6 +2,7 @@ package com.github.mttkay.kats.ext.list
 
 import com.github.mttkay.kats.Applicative
 import com.github.mttkay.kats.K1
+import com.github.mttkay.kats.Monoid
 import com.github.mttkay.kats.data.either.Either
 import com.github.mttkay.kats.data.either.EitherApplicative
 import com.github.mttkay.kats.data.either.narrowEither
@@ -10,6 +11,14 @@ import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.OptionApplicative
 import com.github.mttkay.kats.data.option.narrowOption
 import com.github.mttkay.kats.ext.collection.liftList
+
+// FOLDABLE
+
+// fold(Monoid) is defined in IterableExt
+
+inline fun <A, B> List<A>.foldLeft(initial: B, f: (B, A) -> B): B = this.fold(initial, f)
+
+fun <A, B> List<A>.foldMap(m: Monoid<B>, f: (A) -> B): B = liftList().foldMap(m, f)
 
 // TRAVERSE
 

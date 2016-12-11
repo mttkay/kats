@@ -5,20 +5,14 @@ import com.github.mttkay.kats.data.list.ListContext
 import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.predef.*
 
-fun <T> Iterable<T>.fold(m: Monoid<T>): T =
-    fold(m.empty) { a, b -> m.combine(a, b) }
+fun <T> Iterable<T?>.fold(m: Monoid<T>): T =
+    fold(m.empty) { a, b -> m.combine(a, b ?: m.empty) }
 
-fun Iterable<Int>.fold(): Int = fold(AddIntMonoid)
-fun Iterable<Long>.fold(): Long = fold(AddLongMonoid)
-fun Iterable<Float>.fold(): Float = fold(AddFloatMonoid)
-fun Iterable<Double>.fold(): Double = fold(AddDoubleMonoid)
-fun Iterable<String>.fold(): String = fold(AddStringMonoid)
-
-fun Iterable<Int?>.fold(): Int? = fold(AddNullableIntMonoid)
-fun Iterable<Long?>.fold(): Long? = fold(AddNullableLongMonoid)
-fun Iterable<Float?>.fold(): Float? = fold(AddNullableFloatMonoid)
-fun Iterable<Double?>.fold(): Double? = fold(AddNullableDoubleMonoid)
-//fun Collection<String?>.fold(): String? = fold(AddNullableStringMonoid)
+fun Iterable<Int?>.sum(): Int = fold(AddIntMonoid)
+fun Iterable<Long?>.sum(): Long = fold(AddLongMonoid)
+fun Iterable<Float?>.sum(): Float = fold(AddFloatMonoid)
+fun Iterable<Double?>.sum(): Double = fold(AddDoubleMonoid)
+fun Iterable<String?>.sum(): String = fold(AddStringMonoid)
 
 fun <A> Iterable<A>.liftList(): ListContext<A> = ListContext(this.toList())
 

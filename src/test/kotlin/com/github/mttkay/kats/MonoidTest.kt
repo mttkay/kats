@@ -1,6 +1,7 @@
 package com.github.mttkay.kats
 
 import com.github.mttkay.kats.ext.collection.fold
+import com.github.mttkay.kats.ext.collection.sum
 import com.github.mttkay.kats.predef.MulIntMonoid
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -48,13 +49,13 @@ class MonoidTest {
 
   @Test
   fun `monoid folds on collections`() {
-    assertThat(emptyList<Int>().fold()).isEqualTo(0)
-    assertThat(listOf(2).fold()).isEqualTo(2)
-    assertThat(listOf(2, 4, 6).fold()).isEqualTo(12)
+    assertThat(emptyList<Int>().sum()).isEqualTo(0)
+    assertThat(listOf(2).sum()).isEqualTo(2)
+    assertThat(listOf(2, 4, 6).sum()).isEqualTo(12)
 
-    assertThat(emptyList<String>().fold()).isEqualTo("")
-    assertThat(listOf("a").fold()).isEqualTo("a")
-    assertThat(listOf("a", "b", "c").fold()).isEqualTo("abc")
+    assertThat(emptyList<String>().sum()).isEqualTo("")
+    assertThat(listOf("a").sum()).isEqualTo("a")
+    assertThat(listOf("a", "b", "c").sum()).isEqualTo("abc")
 
     assertThat(emptyList<Int>().fold(MulIntMonoid)).isEqualTo(1)
     assertThat(listOf(2).fold(MulIntMonoid)).isEqualTo(2)

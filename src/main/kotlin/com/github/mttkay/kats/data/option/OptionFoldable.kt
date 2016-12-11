@@ -2,6 +2,7 @@ package com.github.mttkay.kats.data.option
 
 import com.github.mttkay.kats.Foldable
 import com.github.mttkay.kats.K1
+import com.github.mttkay.kats.Monoid
 
 object OptionFoldable : Foldable<Option.F> {
 
@@ -22,6 +23,10 @@ object OptionFoldable : Foldable<Option.F> {
   }
 }
 
+fun <A> Option<A>.fold(m: Monoid<A>): A = OptionFoldable.fold(this, m)
+
 fun <A, B> Option<A>.foldLeft(b: B, f: (B, A) -> B): B = OptionFoldable.foldLeft(this, b, f)
 
 fun <A, B> Option<A>.foldRight(b: B, f: (A, B) -> B): B = OptionFoldable.foldRight(this, b, f)
+
+fun <A, B> Option<A>.foldMap(m: Monoid<B>, f: (A) -> B): B = OptionFoldable.foldMap(this, m, f)
