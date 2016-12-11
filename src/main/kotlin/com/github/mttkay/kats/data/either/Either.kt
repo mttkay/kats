@@ -20,13 +20,20 @@ fun <L, R> Either.Right<*, R>.leftCast() = this as Either.Right<L, R>
 @Suppress("UNCHECKED_CAST") // safe, because operates on Left
 fun <L, R> Either.Left<L, *>.rightCast() = this as Either.Left<L, R>
 
-sealed class Either<L, out R> : EitherKind<L, R> {
+sealed class Either<out L, out R> : EitherKind<L, R> {
 
   class F
 
-  companion object
+  companion object {
 
-  class Left<L, out R>(val value: L) : Either<L, R>() {
+    fun <L> left(v: L): Either<L, Nothing> = Left(v)
+
+    fun <R> right(v: R): Either<Nothing, R> = Right(v)
+
+    fun <L : Any, R : Any> builder() = EitherBuilder<L, R>()
+  }
+
+  class Left<out L, out R>(val value: L) : Either<L, R>() {
 
     override val isLeft = true
 
@@ -50,7 +57,7 @@ sealed class Either<L, out R> : EitherKind<L, R> {
     override fun toString(): String = "Left($value)"
   }
 
-  class Right<L, out R>(val value: R) : Either<L, R>() {
+  class Right<out L, out R>(val value: R) : Either<L, R>() {
 
     override val isLeft = false
 

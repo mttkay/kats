@@ -1,7 +1,5 @@
 package com.github.mttkay.kats.data.either
 
-import com.github.mttkay.kats.data.either.Either.Left
-import com.github.mttkay.kats.data.either.Either.Right
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -9,8 +7,8 @@ class EitherTest {
 
   object Error
 
-  val leftOutcome: Either<Error, Int> = Left(Error)
-  val rightOutcome: Either<Error, Int> = Right(42)
+  val leftOutcome: Either<Error, Nothing> = Either.left(Error)
+  val rightOutcome: Either<Nothing, Int> = Either.right(42)
 
   @Test
   fun `isLeft and isRight on Left`() {
@@ -26,12 +24,12 @@ class EitherTest {
 
   @Test // TODO: use proper equivalence tester
   fun `right value equality`() {
-    assertThat(Right<Error, Int>(42)).isEqualTo(Right<Error, Int>(42))
+    assertThat(Either.right(42)).isEqualTo(Either.right(42))
   }
 
   @Test // TODO: use proper equivalence tester
   fun `left value equality`() {
-    assertThat(Left<Error, Int>(Error)).isEqualTo(Left<Error, Int>(Error))
+    assertThat(Either.left(Error)).isEqualTo(Either.left(Error))
   }
 
   @Test
