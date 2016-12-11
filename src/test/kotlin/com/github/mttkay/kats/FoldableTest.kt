@@ -2,14 +2,12 @@ package com.github.mttkay.kats
 
 import com.github.mttkay.kats.predef.AddIntMonoid
 import com.github.mttkay.kats.predef.AddStringMonoid
+import com.github.mttkay.kats.test.A
+import com.github.mttkay.kats.test.B
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
-typealias A = Int
-typealias B = String
-
 val initial: A = 0
-val a: A = 1
 
 abstract class FoldableTest<F, out K : K1<F, A>> {
 
@@ -24,28 +22,28 @@ abstract class FoldableTest<F, out K : K1<F, A>> {
   fun `foldLeft`() {
     val fold = foldable.foldLeft(fa, initial) { a1, a2 -> a1 + a2 }
 
-    assertThat(fold).isEqualTo(1)
+    assertThat(fold).isEqualTo(42)
   }
 
   @Test
   fun `foldRight`() {
     val fold = foldable.foldRight(fa, initial) { a1, a2 -> a1 + a2 }
 
-    assertThat(fold).isEqualTo(1)
+    assertThat(fold).isEqualTo(42)
   }
 
   @Test
   fun `monoid fold`() {
     val fold = foldable.fold(fa, ma)
 
-    assertThat(fold).isEqualTo(1)
+    assertThat(fold).isEqualTo(42)
   }
 
   @Test
   fun `foldMap`() {
     val fold = foldable.foldMap(fa, mb, A::toString)
 
-    assertThat(fold).isEqualTo("1")
+    assertThat(fold).isEqualTo("42")
   }
 
 }

@@ -2,6 +2,8 @@ package com.github.mttkay.kats.laws.functor
 
 import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.OptionFunctor
+import com.github.mttkay.kats.test.A
+import com.github.mttkay.kats.test.a
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters

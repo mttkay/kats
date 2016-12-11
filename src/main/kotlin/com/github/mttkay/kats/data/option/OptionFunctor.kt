@@ -12,3 +12,9 @@ object OptionFunctor : Functor<Option.F> {
     }
   }
 }
+
+fun <A, B> Option<A>.fproduct(f: (A) -> B): Option<Pair<A, B>> =
+    OptionFunctor.fproduct(this, f).narrowOption()
+
+fun <A> Option<A>.void(): Option<Unit> =
+    OptionFunctor.void(this).narrowOption()

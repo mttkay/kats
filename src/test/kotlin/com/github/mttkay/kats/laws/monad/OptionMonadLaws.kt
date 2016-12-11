@@ -4,7 +4,7 @@ import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.Option.None
 import com.github.mttkay.kats.data.option.Option.Some
 import com.github.mttkay.kats.data.option.OptionMonad
-import com.github.mttkay.kats.laws.applicative.*
+import com.github.mttkay.kats.test.*
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters

@@ -15,3 +15,9 @@ object TryFunctor : Functor<Try.F> {
   }
 
 }
+
+fun <A, B> Try<A>.fproduct(f: (A) -> B): Try<Pair<A, B>> =
+    TryFunctor.fproduct(this, f).narrowTry()
+
+fun <A> Try<A>.void(): Try<Unit> =
+    TryFunctor.void(this).narrowTry()

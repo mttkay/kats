@@ -4,7 +4,7 @@ import com.github.mttkay.kats.data.`try`.Try
 import com.github.mttkay.kats.data.`try`.Try.Failure
 import com.github.mttkay.kats.data.`try`.Try.Success
 import com.github.mttkay.kats.data.`try`.TryMonad
-import com.github.mttkay.kats.laws.applicative.*
+import com.github.mttkay.kats.test.*
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters

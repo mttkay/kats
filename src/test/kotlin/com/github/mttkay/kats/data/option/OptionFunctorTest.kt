@@ -1,10 +1,17 @@
 package com.github.mttkay.kats.data.option
 
+import com.github.mttkay.kats.FunctorTest
 import com.github.mttkay.kats.ext.nullable.liftOption
+import com.github.mttkay.kats.test.A
+import com.github.mttkay.kats.test.a
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
-class OptionFunctorTest {
+class OptionFunctorTest : FunctorTest<Option.F, Option<A>>() {
+
+  override val functor = OptionFunctor
+
+  override val fa = Option.Some(a)
 
   @Test
   fun `map None`() {

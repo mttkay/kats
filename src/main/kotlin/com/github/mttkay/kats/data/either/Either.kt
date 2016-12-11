@@ -9,6 +9,9 @@ typealias EitherKind<L, R> = K1<EitherF<L>, R>
 fun <L, R> EitherKind<L, R>.narrowEither() = this as Either<L, R>
 
 @Suppress("UNCHECKED_CAST")
+fun <L, R, S> ((EitherKind<L, R>) -> EitherKind<L, S>).narrowEitherFn() = this as ((Either<L, R>) -> Either<L, S>)
+
+@Suppress("UNCHECKED_CAST")
 fun <L, R, F> K1<F, EitherKind<L, R>>.narrowInnerEither() = this as K1<F, Either<L, R>>
 
 @Suppress("UNCHECKED_CAST") // safe, because operates on Right
@@ -20,6 +23,8 @@ fun <L, R> Either.Left<L, *>.rightCast() = this as Either.Left<L, R>
 sealed class Either<L, out R> : EitherKind<L, R> {
 
   class F
+
+  companion object
 
   class Left<L, out R>(val value: L) : Either<L, R>() {
 

@@ -4,16 +4,8 @@ import com.github.mttkay.kats.Applicative
 import com.github.mttkay.kats.K1
 import com.github.mttkay.kats.functions.compose
 import com.github.mttkay.kats.mustEqual
+import com.github.mttkay.kats.test.*
 import org.junit.Test
-
-typealias A = Int
-typealias B = String
-typealias C = Boolean
-
-val a: A = 42
-
-fun f(a: A): B = a.toString()
-fun g(b: B): C = b.toBoolean()
 
 interface ApplicativeLaws<F, out K : K1<F, A>> {
 

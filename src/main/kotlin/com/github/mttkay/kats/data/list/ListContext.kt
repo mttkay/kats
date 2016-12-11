@@ -9,6 +9,10 @@ typealias ListKind<A> = K1<ListContext.F, A>
 fun <A> ListKind<A>.narrowList(): ListContext<A> = this as ListContext<A>
 
 @Suppress("UNCHECKED_CAST")
+fun <A, B> ((ListKind<A>) -> ListKind<B>).narrowListFn(): (ListContext<A>) -> ListContext<B> =
+    this as (ListContext<A>) -> ListContext<B>
+
+@Suppress("UNCHECKED_CAST")
 fun <A, G> K1<G, K1<ListContext.F, A>>.narrowInnerList(): K1<G, ListContext<A>> =
     this as K1<G, ListContext<A>>
 

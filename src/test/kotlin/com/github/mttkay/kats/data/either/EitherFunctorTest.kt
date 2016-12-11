@@ -1,21 +1,25 @@
 package com.github.mttkay.kats.data.either
 
+import com.github.mttkay.kats.FunctorTest
+import com.github.mttkay.kats.test.a
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.Test
 
-class EitherFunctorTest {
+class EitherFunctorTest : FunctorTest<EitherF<L>, Either<L, R>>() {
 
-  object Error
+  override val functor = EitherFunctor.instance<L>()
 
-  val leftOutcome: Either<Error, Int> = Either.Left(Error)
-  val rightOutcome: Either<Error, Int> = Either.Right(42)
+  override val fa = Either.Right<L, R>(a)
+
+  val leftOutcome: Either<L, Int> = Either.Left(L)
+  val rightOutcome: Either<L, Int> = Either.Right(42)
 
   @Test
   fun `map right bias on Left`() {
     val mapped = leftOutcome.map(Int::toString)
     when (mapped) {
-      is Either.Left -> assertThat(mapped.value).isEqualTo(Error)
+      is Either.Left -> assertThat(mapped.value).isEqualTo(L)
       is Either.Right -> fail("Expected Left outcome")
     }
   }

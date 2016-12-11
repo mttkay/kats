@@ -37,6 +37,11 @@ fun <A> List<Option<A>>.sequenceOption(): Option<List<A>> =
 fun <L, R> List<Either<L, R>>.sequenceEither(): Either<L, List<R>> =
     sequence(EitherApplicative.instance<L>()).narrowEither()
 
+// FUNCTOR
+
+fun <A, B> List<A>.fproduct(f: (A) -> B): List<Pair<A, B>> =
+    liftList().fproduct(f).list
+
 // APPLICATIVE
 
 infix fun <A, B> List<A>.product(that: List<B>): List<Pair<A, B>> =

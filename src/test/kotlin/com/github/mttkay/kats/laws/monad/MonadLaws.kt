@@ -3,8 +3,9 @@ package com.github.mttkay.kats.laws.monad
 import com.github.mttkay.kats.Applicative
 import com.github.mttkay.kats.K1
 import com.github.mttkay.kats.Monad
-import com.github.mttkay.kats.laws.applicative.*
+import com.github.mttkay.kats.laws.applicative.ApplicativeLaws
 import com.github.mttkay.kats.mustEqual
+import com.github.mttkay.kats.test.*
 import org.junit.Test
 
 abstract class MonadLaws<F, out K : K1<F, A>>(val m: Monad<F>) : ApplicativeLaws<F, K> {

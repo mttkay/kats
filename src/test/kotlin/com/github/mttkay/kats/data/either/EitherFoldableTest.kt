@@ -1,10 +1,10 @@
 package com.github.mttkay.kats.data.either
 
-import com.github.mttkay.kats.A
 import com.github.mttkay.kats.FoldableTest
-import com.github.mttkay.kats.a
+import com.github.mttkay.kats.test.A
+import com.github.mttkay.kats.test.a
 
-typealias L = Nothing
+object L
 typealias R = A
 
 class EitherFoldableTest : FoldableTest<EitherF<L>, Either<L, R>>() {

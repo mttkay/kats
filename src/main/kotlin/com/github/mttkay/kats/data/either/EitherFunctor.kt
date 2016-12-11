@@ -19,3 +19,12 @@ interface EitherFunctor<L> : Functor<EitherF<L>> {
     }
   }
 }
+
+fun <L, R, S> Either.Companion.lift(f: (R) -> S): (Either<L, R>) -> Either<L, S> =
+    EitherFunctor.instance<L>().lift(f).narrowEitherFn()
+
+fun <L, R, S> Either<L, R>.fproduct(f: (R) -> S): Either<L, Pair<R, S>> =
+    EitherFunctor.instance<L>().fproduct(this, f).narrowEither()
+
+fun <L, R> Either<L, R>.void(): Either<L, Unit> =
+    EitherFunctor.instance<L>().void(this).narrowEither()

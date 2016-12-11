@@ -4,16 +4,10 @@ import com.github.mttkay.kats.Functor
 import com.github.mttkay.kats.K1
 import com.github.mttkay.kats.functions.compose
 import com.github.mttkay.kats.mustEqual
+import com.github.mttkay.kats.test.A
+import com.github.mttkay.kats.test.f
+import com.github.mttkay.kats.test.g
 import org.junit.Test
-
-typealias A = Int
-typealias B = String
-typealias C = Boolean
-
-val a: A = 42
-
-fun f(a: A): B = a.toString()
-fun g(b: B): C = b.toBoolean()
 
 interface FunctorLaws<F, out K : K1<F, A>> {
 

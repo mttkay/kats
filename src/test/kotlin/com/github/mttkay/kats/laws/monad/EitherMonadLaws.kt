@@ -5,7 +5,7 @@ import com.github.mttkay.kats.data.either.Either.Left
 import com.github.mttkay.kats.data.either.Either.Right
 import com.github.mttkay.kats.data.either.EitherF
 import com.github.mttkay.kats.data.either.EitherMonad
-import com.github.mttkay.kats.laws.applicative.*
+import com.github.mttkay.kats.test.*
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
