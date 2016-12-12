@@ -26,7 +26,7 @@ fun <A> Try<A>.handleErrorWith(f: (Throwable) -> Try<A>): Try<A> =
 fun <A> Try<A>.handleError(f: (Throwable) -> A): Try<A> =
     TryMonadError.handleError(this, f).narrowTry()
 
-fun <A> Try<A>.ensure(p: () -> Boolean, e: () -> Throwable): Try<A> =
+fun <A> Try<A>.ensure(p: (A) -> Boolean, e: () -> Throwable): Try<A> =
     TryMonadError.ensure(this, p, e).narrowTry()
 
 fun <A> Try<A>.attempt(): Try<Either<Throwable, A>> =
