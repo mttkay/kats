@@ -8,19 +8,19 @@ class ListApplicativeTest {
 
   @Test
   fun `pure`() {
-    assertThat(ListApplicative.pure(42)).isEqualTo(ListContext(listOf(42)))
+    assertThat(ListApplicative.pure(42)).isEqualTo(ListK(listOf(42)))
   }
 
   @Test
   fun `ap on ListContext`() {
-    val fa = ListContext(listOf(1, 2, 3))
-    val ffa = ListContext(listOf(
+    val fa = ListK(listOf(1, 2, 3))
+    val ffa = ListK(listOf(
         { n: Int -> n * 2 },
         { n: Int -> n + 1 }
     ))
 
     assertThat(ListApplicative.ap(fa, ffa)).isEqualTo(
-        ListContext(listOf(2, 4, 6, 2, 3, 4))
+        ListK(listOf(2, 4, 6, 2, 3, 4))
     )
   }
 
@@ -39,17 +39,17 @@ class ListApplicativeTest {
 
   @Test
   fun `map`() {
-    val fa = ListContext(listOf(1, 2, 3))
+    val fa = ListK(listOf(1, 2, 3))
 
     val mapped = ListApplicative.map(fa) { it * 2 }
 
-    assertThat(mapped).isEqualTo(ListContext(listOf(2, 4, 6)))
+    assertThat(mapped).isEqualTo(ListK(listOf(2, 4, 6)))
   }
 
   @Test
   fun `product`() {
-    val left = ListContext(listOf(1, 2))
-    val right = ListContext(listOf(3, 4))
+    val left = ListK(listOf(1, 2))
+    val right = ListK(listOf(3, 4))
 
     val product = ListApplicative.product(left, right)
 

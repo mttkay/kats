@@ -4,7 +4,7 @@ import com.github.mttkay.kats.*
 import com.github.mttkay.kats.data.either.Either.Left
 import com.github.mttkay.kats.data.either.Either.Right
 import com.github.mttkay.kats.data.list.ListApplicative
-import com.github.mttkay.kats.data.list.ListContext
+import com.github.mttkay.kats.data.list.ListK
 import com.github.mttkay.kats.data.list.ListKind
 import com.github.mttkay.kats.data.list.narrowList
 import com.github.mttkay.kats.data.option.Option
@@ -37,7 +37,7 @@ class EitherTraverse<L> :
 fun <L, A, B, G> Either<L, K1<G, A>>.traverse(app: Applicative<G>, f: (K1<G, A>) -> K1<G, B>): K1<G, Either<L, B>> =
     EitherTraverse.instance<L>().traverse(this, app, f)
 
-fun <L, A, B> Either<L, ListContext<A>>.traverseList(f: (ListContext<A>) -> ListContext<B>): ListContext<Either<L, B>> =
+fun <L, A, B> Either<L, ListK<A>>.traverseList(f: (ListK<A>) -> ListK<B>): ListK<Either<L, B>> =
     traverse(ListApplicative) {
       f(it.narrowList())
     }.narrowList()
@@ -55,7 +55,7 @@ fun <L, A, B> Either<L, Option<A>>.traverseOption(f: (Option<A>) -> Option<B>): 
 fun <L, A, G> Either<L, K1<G, A>>.sequence(app: Applicative<G>): K1<G, Either<L, A>> =
     EitherTraverse.instance<L>().sequence(this, app).narrowInnerEither()
 
-fun <L, A> Either<L, ListContext<A>>.sequenceList(): ListContext<Either<L, A>> =
+fun <L, A> Either<L, ListK<A>>.sequenceList(): ListK<Either<L, A>> =
     sequence(ListApplicative).narrowList()
 
 fun <L, A> Either<L, List<A>>.sequenceList(): List<Either<L, A>> =

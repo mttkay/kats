@@ -3,12 +3,12 @@ package com.github.mttkay.kats.data.list
 import com.github.mttkay.kats.Applicative
 import com.github.mttkay.kats.ext.collection.liftList
 
-object ListApplicative : Applicative<ListContext.F> {
+object ListApplicative : Applicative<ListK.F> {
 
-  override fun <A> pure(a: A): ListContext<A> =
-      ListContext(listOf(a))
+  override fun <A> pure(a: A): ListK<A> =
+      ListK(listOf(a))
 
-  override fun <A, B> ap(fa: ListKind<A>, ffa: ListKind<(A) -> B>): ListContext<B> =
+  override fun <A, B> ap(fa: ListKind<A>, ffa: ListKind<(A) -> B>): ListK<B> =
       ap(fa.narrowList().list, ffa.narrowList().list).liftList()
 
   fun <A, B> ap(fa: List<A>, ffa: List<(A) -> B>): List<B> =
@@ -16,7 +16,7 @@ object ListApplicative : Applicative<ListContext.F> {
 
 }
 
-infix fun <A, B> ListContext<A>.product(that: ListContext<B>): ListContext<Pair<A, B>> =
+infix fun <A, B> ListK<A>.product(that: ListK<B>): ListK<Pair<A, B>> =
     ListMonad.product(this, that).narrowList()
 
-infix operator fun <A, B> ListContext<A>.times(that: ListContext<B>): ListContext<Pair<A, B>> = product(that)
+infix operator fun <A, B> ListK<A>.times(that: ListK<B>): ListK<Pair<A, B>> = product(that)

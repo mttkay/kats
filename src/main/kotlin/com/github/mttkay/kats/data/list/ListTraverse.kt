@@ -9,31 +9,31 @@ import com.github.mttkay.kats.data.option.OptionApplicative
 import com.github.mttkay.kats.data.option.narrowOption
 
 object ListTraverse :
-    Traverse<ListContext.F>,
-    Foldable<ListContext.F> by ListFoldable,
-    Functor<ListContext.F> by ListFunctor {
+    Traverse<ListK.F>,
+    Foldable<ListK.F> by ListFoldable,
+    Functor<ListK.F> by ListFunctor {
 
-  override fun <G, A, B> traverse(fa: ListKind<A>, app: Applicative<G>, f: (A) -> K1<G, B>): K1<G, ListContext<B>> {
-    return foldRight(fa, app.pure(ListContext.empty())) { a, list ->
-      app.map2(f(a), list) { (b, y) -> ListContext(b, y.list) }
+  override fun <G, A, B> traverse(fa: ListKind<A>, app: Applicative<G>, f: (A) -> K1<G, B>): K1<G, ListK<B>> {
+    return foldRight(fa, app.pure(ListK.empty())) { a, list ->
+      app.map2(f(a), list) { (b, y) -> ListK(b, y.list) }
     }
   }
 
 }
 
-fun <A, B, G> ListContext<K1<G, A>>.traverse(app: Applicative<G>, f: (K1<G, A>) -> K1<G, B>): K1<G, ListContext<B>> =
+fun <A, B, G> ListK<K1<G, A>>.traverse(app: Applicative<G>, f: (K1<G, A>) -> K1<G, B>): K1<G, ListK<B>> =
     ListTraverse.traverse(this, app, f)
 
-fun <A, B> ListContext<Option<A>>.traverseOption(f: (Option<A>) -> Option<B>): Option<ListContext<B>> =
+fun <A, B> ListK<Option<A>>.traverseOption(f: (Option<A>) -> Option<B>): Option<ListK<B>> =
     traverse(OptionApplicative) {
       f(it.narrowOption())
     }.narrowOption()
 
-fun <A, G> ListContext<K1<G, A>>.sequence(app: Applicative<G>): K1<G, ListContext<A>> =
+fun <A, G> ListK<K1<G, A>>.sequence(app: Applicative<G>): K1<G, ListK<A>> =
     ListTraverse.sequence(this, app).narrowInnerList()
 
-fun <A> ListContext<Option<A>>.sequenceOption(): Option<ListContext<A>> =
+fun <A> ListK<Option<A>>.sequenceOption(): Option<ListK<A>> =
     sequence(OptionApplicative).narrowOption()
 
-fun <L, R> ListContext<Either<L, R>>.sequenceEither(): Either<L, ListContext<R>> =
+fun <L, R> ListK<Either<L, R>>.sequenceEither(): Either<L, ListK<R>> =
     sequence(EitherApplicative.instance<L>()).narrowEither()

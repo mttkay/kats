@@ -19,24 +19,24 @@ class ListTraverseTest {
 
   @Test
   fun `traverse`() {
-    val list = ListContext(Some(1), Some(2), Some(3))
+    val list = ListK(Some(1), Some(2), Some(3))
 
     val traverse = list.traverse(OptionApplicative) {
       it.narrowOption() map Int::toString
     }
 
-    assertThat(traverse).isEqualTo(Some(ListContext("1", "2", "3")))
+    assertThat(traverse).isEqualTo(Some(ListK("1", "2", "3")))
   }
 
   @Test
   fun `traverseOption`() {
-    val list = ListContext(Some(1), Some(2), Some(3))
+    val list = ListK(Some(1), Some(2), Some(3))
 
-    val traverse: Option<ListContext<String>> = list.traverseOption {
+    val traverse: Option<ListK<String>> = list.traverseOption {
       it map Int::toString
     }
 
-    assertThat(traverse).isEqualTo(Some(ListContext("1", "2", "3")))
+    assertThat(traverse).isEqualTo(Some(ListK("1", "2", "3")))
   }
 
   @Test
@@ -52,29 +52,29 @@ class ListTraverseTest {
 
   @Test
   fun `sequence Some`() {
-    val list = ListContext(Some(1), Some(2), Some(3))
+    val list = ListK(Some(1), Some(2), Some(3))
 
-    val sequence: K1<Option.F, ListContext<Int>> = list.sequence(OptionApplicative)
+    val sequence: K1<Option.F, ListK<Int>> = list.sequence(OptionApplicative)
 
-    assertThat(sequence).isEqualTo(Some(ListContext(1, 2, 3)))
+    assertThat(sequence).isEqualTo(Some(ListK(1, 2, 3)))
   }
 
   @Test
   fun `sequence None`() {
-    val list = ListContext(Some(1), None, Some(3))
+    val list = ListK(Some(1), None, Some(3))
 
-    val sequence: K1<Option.F, ListContext<Int>> = list.sequence(OptionApplicative)
+    val sequence: K1<Option.F, ListK<Int>> = list.sequence(OptionApplicative)
 
     assertThat(sequence).isEqualTo(None)
   }
 
   @Test
   fun `sequenceOption`() {
-    val list = ListContext(Some(1), Some(2), Some(3))
+    val list = ListK(Some(1), Some(2), Some(3))
 
-    val sequence: Option<ListContext<Int>> = list.sequenceOption()
+    val sequence: Option<ListK<Int>> = list.sequenceOption()
 
-    assertThat(sequence).isEqualTo(Some(ListContext(1, 2, 3)))
+    assertThat(sequence).isEqualTo(Some(ListK(1, 2, 3)))
   }
 
   @Test
@@ -88,15 +88,15 @@ class ListTraverseTest {
 
   @Test
   fun `sequenceEither`() {
-    val list = ListContext(
+    val list = ListK(
         Right<Nothing, Int>(1),
         Right<Nothing, Int>(2),
         Right<Nothing, Int>(3)
     )
 
-    val sequence: Either<Nothing, ListContext<Int>> = list.sequenceEither()
+    val sequence: Either<Nothing, ListK<Int>> = list.sequenceEither()
 
-    assertThat(sequence).isEqualTo(Right<Nothing, ListContext<Int>>(ListContext(1, 2, 3)))
+    assertThat(sequence).isEqualTo(Right<Nothing, ListK<Int>>(ListK(1, 2, 3)))
   }
 
   @Test

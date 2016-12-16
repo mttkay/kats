@@ -24,7 +24,7 @@ fun <A, B> List<A>.foldMap(m: Monoid<B>, f: (A) -> B): B = liftList().foldMap(m,
 // TRAVERSE
 
 fun <A, B, G> List<K1<G, A>>.traverse(app: Applicative<G>, f: (K1<G, A>) -> K1<G, B>): K1<G, List<B>> =
-    app.map(liftList().traverse(app, f), ListContext<B>::list)
+    app.map(liftList().traverse(app, f), ListK<B>::list)
 
 fun <A, B> List<Option<A>>.traverseOption(f: (Option<A>) -> Option<B>): Option<List<B>> =
     liftList().traverseOption(f).map { it.list }

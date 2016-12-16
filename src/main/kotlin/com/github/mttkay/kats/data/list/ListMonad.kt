@@ -4,9 +4,9 @@ import com.github.mttkay.kats.Applicative
 import com.github.mttkay.kats.Monad
 import com.github.mttkay.kats.ext.collection.liftList
 
-object ListMonad : Monad<ListContext.F>, Applicative<ListContext.F> by ListApplicative {
+object ListMonad : Monad<ListK.F>, Applicative<ListK.F> by ListApplicative {
 
-  override fun <A, B> flatMap(fa: ListKind<A>, f: (A) -> ListKind<B>): ListContext<B> =
+  override fun <A, B> flatMap(fa: ListKind<A>, f: (A) -> ListKind<B>): ListK<B> =
       fa.narrowList().list.flatMap { f(it).narrowList().list }.liftList()
 
 }

@@ -1,7 +1,7 @@
 package com.github.mttkay.kats.data.either
 
 import com.github.mttkay.kats.data.either.Either.Right
-import com.github.mttkay.kats.data.list.ListContext
+import com.github.mttkay.kats.data.list.ListK
 import com.github.mttkay.kats.data.list.map
 import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.Option.Some
@@ -44,11 +44,11 @@ class EitherTraverseTest {
 
   @Test
   fun `traverseList`() {
-    val traverse = Right<Nothing, ListContext<Int>>(ListContext(1, 2, 3)).traverseList {
+    val traverse = Right<Nothing, ListK<Int>>(ListK(1, 2, 3)).traverseList {
       it map Int::toString
     }
 
-    assertThat(traverse).isEqualTo(ListContext(
+    assertThat(traverse).isEqualTo(ListK(
         Right<Nothing, String>("1"),
         Right<Nothing, String>("2"),
         Right<Nothing, String>("3")
@@ -77,9 +77,9 @@ class EitherTraverseTest {
 
   @Test
   fun `sequenceList`() {
-    val sequence = Right<Nothing, ListContext<Int>>(ListContext(1, 2, 3)).sequenceList()
+    val sequence = Right<Nothing, ListK<Int>>(ListK(1, 2, 3)).sequenceList()
 
-    assertThat(sequence).isEqualTo(ListContext(
+    assertThat(sequence).isEqualTo(ListK(
         Right<Nothing, Int>(1),
         Right<Nothing, Int>(2),
         Right<Nothing, Int>(3)

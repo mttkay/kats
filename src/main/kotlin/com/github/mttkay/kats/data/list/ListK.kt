@@ -2,28 +2,31 @@ package com.github.mttkay.kats.data.list
 
 import com.github.mttkay.kats.K1
 
-typealias ListKind<A> = K1<ListContext.F, A>
+typealias ListKind<A> = K1<ListK.F, A>
 
-fun <A> ListKind<A>.narrowList(): ListContext<A> = this as ListContext<A>
-
-@Suppress("UNCHECKED_CAST")
-fun <A, B> ((ListKind<A>) -> ListKind<B>).narrowListFn(): (ListContext<A>) -> ListContext<B> =
-    this as (ListContext<A>) -> ListContext<B>
+fun <A> ListKind<A>.narrowList(): ListK<A> = this as ListK<A>
 
 @Suppress("UNCHECKED_CAST")
-fun <A, G> K1<G, K1<ListContext.F, A>>.narrowInnerList(): K1<G, ListContext<A>> =
-    this as K1<G, ListContext<A>>
+fun <A, B> ((ListKind<A>) -> ListKind<B>).narrowListFn(): (ListK<A>) -> ListK<B> =
+    this as (ListK<A>) -> ListK<B>
 
-class ListContext<out A>(val list: List<A>) : ListKind<A> {
+@Suppress("UNCHECKED_CAST")
+fun <A, G> K1<G, K1<ListK.F, A>>.narrowInnerList(): K1<G, ListK<A>> =
+    this as K1<G, ListK<A>>
 
-  class F {}
+/**
+ * Wrapper class to give Kotlin [List]s the higher-kinded type treatment.
+ */
+class ListK<out A>(val list: List<A>) : ListKind<A> {
+
+  class F
 
   companion object {
 
-    private val emptyInstance = ListContext<Any>()
+    private val emptyInstance = ListK<Any>()
 
     @Suppress("UNCHECKED_CAST")
-    fun <A> empty(): ListContext<A> = emptyInstance as ListContext<A>
+    fun <A> empty(): ListK<A> = emptyInstance as ListK<A>
   }
 
   constructor(vararg values: A) : this(values.toList())
@@ -34,7 +37,7 @@ class ListContext<out A>(val list: List<A>) : ListKind<A> {
     if (this === other) return true
     if (other?.javaClass != javaClass) return false
 
-    other as ListContext<*>
+    other as ListK<*>
 
     if (list != other.list) return false
 

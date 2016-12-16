@@ -7,13 +7,13 @@ class ListMonadTest {
 
   @Test
   fun `pure`() {
-    assertThat(ListMonad.pure(42)).isEqualTo(ListContext(42))
+    assertThat(ListMonad.pure(42)).isEqualTo(ListK(42))
   }
 
   @Test
   fun `ap`() {
-    val fa = ListContext(1, 2, 3)
-    val ffa = ListContext(
+    val fa = ListK(1, 2, 3)
+    val ffa = ListK(
         { n: Int -> n * 2 },
         { n: Int -> n + 1 }
     )
@@ -21,25 +21,25 @@ class ListMonadTest {
     val fb = ListMonad.ap(fa, ffa)
 
     assertThat(fb).isEqualTo(
-        ListContext(2, 4, 6, 2, 3, 4)
+        ListK(2, 4, 6, 2, 3, 4)
     )
   }
 
   @Test
   fun `flatMap`() {
-    val fa = ListContext(1, 2, 3)
+    val fa = ListK(1, 2, 3)
 
-    val fb = ListMonad.flatMap(fa) { ListContext(it * 2) }
+    val fb = ListMonad.flatMap(fa) { ListK(it * 2) }
 
-    assertThat(fb).isEqualTo(ListContext(2, 4, 6))
+    assertThat(fb).isEqualTo(ListK(2, 4, 6))
   }
 
   @Test
   fun `flatten`() {
-    val fa = ListContext(ListContext(1, 2, 3))
+    val fa = ListK(ListK(1, 2, 3))
 
     val fb = ListMonad.flatten(fa)
 
-    assertThat(fb).isEqualTo(ListContext(1, 2, 3))
+    assertThat(fb).isEqualTo(ListK(1, 2, 3))
   }
 }
