@@ -20,3 +20,6 @@ interface EitherMonad<L> : EitherApplicative<L>, Monad<EitherF<L>> {
     }
   }
 }
+
+infix fun <L, R, S> Either<L, R>.flatMap(f: (R) -> Either<L, S>): Either<L, S> =
+    EitherMonad.instance<L>().flatMap(this, f)

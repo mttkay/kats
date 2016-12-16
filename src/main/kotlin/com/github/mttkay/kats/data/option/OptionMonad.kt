@@ -13,3 +13,5 @@ object OptionMonad : Monad<Option.F>, Applicative<Option.F> by OptionApplicative
     }
   }
 }
+
+infix fun <A, B> Option<A>.flatMap(f: (A) -> Option<B>): Option<B> = OptionMonad.flatMap(this, f)

@@ -10,3 +10,6 @@ object ListMonad : Monad<ListK.F>, Applicative<ListK.F> by ListApplicative {
       fa.narrowList().list.flatMap { f(it).narrowList().list }.toListK()
 
 }
+
+infix fun <A, B> ListK<A>.flatMap(f: (A) -> ListK<B>): ListK<B> =
+    ListMonad.flatMap(this, f)

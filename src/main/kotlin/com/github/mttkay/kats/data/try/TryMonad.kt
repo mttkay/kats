@@ -13,3 +13,5 @@ object TryMonad : Monad<Try.F>, Applicative<Try.F> by TryApplicative {
     }
   }
 }
+
+infix fun <A, B> Try<A>.flatMap(f: (A) -> Try<B>): Try<B> = TryMonad.flatMap(this, f)

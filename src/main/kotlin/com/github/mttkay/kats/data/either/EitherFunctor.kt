@@ -22,8 +22,6 @@ interface EitherFunctor<L> : Functor<EitherF<L>> {
 
 infix fun <L, R, S> Either<L, R>.map(f: (R) -> S): Either<L, S> = EitherFunctor.instance<L>().map(this, f)
 
-infix fun <L, R, S> Either<L, R>.flatMap(f: (R) -> Either<L, S>): Either<L, S> = EitherMonad.instance<L>().flatMap(this, f)
-
 fun <L, R, S> Either.Companion.lift(f: (R) -> S): (Either<L, R>) -> Either<L, S> =
     EitherFunctor.instance<L>().lift(f).narrowEitherFn()
 

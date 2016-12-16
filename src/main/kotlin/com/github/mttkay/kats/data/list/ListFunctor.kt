@@ -16,9 +16,6 @@ object ListFunctor : Functor<ListK.F> {
 infix fun <A, B> ListK<A>.map(f: (A) -> B): ListK<B> =
     ListFunctor.map(this, f)
 
-infix fun <A, B> ListK<A>.flatMap(f: (A) -> ListK<B>): ListK<B> =
-    ListMonad.flatMap(this, f)
-
 fun <A, B> ListK.Companion.lift(f: (A) -> B): (ListK<A>) -> ListK<B> =
     ListFunctor.lift(f).narrowListFn()
 

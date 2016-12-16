@@ -18,8 +18,6 @@ object TryFunctor : Functor<Try.F> {
 
 infix fun <A, B> Try<A>.map(f: (A) -> B): Try<B> = TryFunctor.map(this, f)
 
-infix fun <A, B> Try<A>.flatMap(f: (A) -> Try<B>): Try<B> = TryMonad.flatMap(this, f)
-
 fun <A, B> Try<A>.fproduct(f: (A) -> B): Try<Pair<A, B>> =
     TryFunctor.fproduct(this, f).narrowTry()
 
