@@ -1,7 +1,7 @@
 package com.github.mttkay.kats.data.option
 
 import com.github.mttkay.kats.FunctorTest
-import com.github.mttkay.kats.ext.nullable.liftOption
+import com.github.mttkay.kats.ext.nullable.toOption
 import com.github.mttkay.kats.test.A
 import com.github.mttkay.kats.test.a
 import org.assertj.core.api.Assertions.assertThat
@@ -15,12 +15,12 @@ class OptionFunctorTest : FunctorTest<Option.F, Option<A>>() {
 
   @Test
   fun `map None`() {
-    assertThat(null.liftOption().map(Int::toString)).isEqualTo(Option.None)
+    assertThat(null.toOption().map(Int::toString)).isEqualTo(Option.None)
   }
 
   @Test
   fun `map Some`() {
-    assertThat(42.liftOption().map(Int::toString)).isEqualTo(Option.Some("42"))
+    assertThat(42.toOption().map(Int::toString)).isEqualTo(Option.Some("42"))
   }
 
 }

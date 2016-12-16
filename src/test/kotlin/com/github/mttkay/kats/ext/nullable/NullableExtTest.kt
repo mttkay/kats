@@ -8,11 +8,11 @@ class NullableExtTest {
 
   @Test
   fun `liftOption for null`() {
-    assertThat(null.liftOption()).isEqualTo(Option.None)
+    assertThat(null.toOption()).isEqualTo(Option.None)
   }
 
   @Test
   fun `liftOption for value`() {
-    assertThat(42.liftOption()).isEqualTo(Option.Some(42))
+    assertThat(42.toOption()).isEqualTo(Option.Some(42))
   }
 }

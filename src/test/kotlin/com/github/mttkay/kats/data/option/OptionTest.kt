@@ -2,7 +2,7 @@ package com.github.mttkay.kats.data.option
 
 import com.github.mttkay.kats.data.option.Option.None
 import com.github.mttkay.kats.data.option.Option.Some
-import com.github.mttkay.kats.ext.nullable.liftOption
+import com.github.mttkay.kats.ext.nullable.toOption
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -10,12 +10,12 @@ class OptionTest {
 
   @Test
   fun `lift nullable to Option when not null`() {
-    assertThat(42.liftOption()).isEqualTo(Some(42))
+    assertThat(42.toOption()).isEqualTo(Some(42))
   }
 
   @Test
   fun `lift nullable to Option when null`() {
-    assertThat((null as Int?).liftOption()).isSameAs(None)
+    assertThat((null as Int?).toOption()).isSameAs(None)
   }
 
   @Test
