@@ -15,7 +15,7 @@ fun Iterable<Float?>.sum(): Float = fold(AddFloatMonoid)
 fun Iterable<Double?>.sum(): Double = fold(AddDoubleMonoid)
 fun Iterable<String?>.sum(): String = fold(AddStringMonoid)
 
-fun <A> Iterable<A>.liftList(): ListK<A> = ListK(this.toList())
+fun <A> Iterable<A>.toListK(): ListK<A> = ListK(this.toList())
 
 fun <A, B> Iterable<Option<A>>.mapOption(f: (A) -> B): List<Option<B>> = this.map { it.map(f) }
 inline fun <A, B> Iterable<A?>.mapNullable(f: (A) -> B): List<B?> = this.map { it?.let(f) }

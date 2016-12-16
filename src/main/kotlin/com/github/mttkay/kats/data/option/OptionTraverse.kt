@@ -7,7 +7,7 @@ import com.github.mttkay.kats.data.list.ListKind
 import com.github.mttkay.kats.data.list.narrowList
 import com.github.mttkay.kats.data.option.Option.None
 import com.github.mttkay.kats.data.option.Option.Some
-import com.github.mttkay.kats.ext.collection.liftList
+import com.github.mttkay.kats.ext.collection.toListK
 
 object OptionTraverse :
     Traverse<Option.F>,
@@ -33,8 +33,8 @@ fun <A, B> Option<ListK<A>>.traverseList(f: (ListK<A>) -> ListK<B>): ListK<Optio
 
 // TODO: there's an awful lot of back and forth here; look into simplifying this
 fun <A, B> Option<List<A>>.traverseList(f: (List<A>) -> List<B>): List<Option<B>> =
-    map { it.liftList() }.traverse(ListApplicative) { a: ListKind<A> ->
-      f(a.narrowList().list).liftList()
+    map { it.toListK() }.traverse(ListApplicative) { a: ListKind<A> ->
+      f(a.narrowList().list).toListK()
     }.narrowList().list
 
 fun <A, G> Option<K1<G, A>>.sequence(app: Applicative<G>): K1<G, Option<A>> =
@@ -44,4 +44,4 @@ fun <A> Option<ListK<A>>.sequenceList(): ListK<Option<A>> =
     sequence(ListApplicative).narrowList()
 
 fun <A> Option<List<A>>.sequenceList(): List<Option<A>> =
-    map { it.liftList() }.sequence(ListApplicative).narrowList().list
+    map { it.toListK() }.sequence(ListApplicative).narrowList().list

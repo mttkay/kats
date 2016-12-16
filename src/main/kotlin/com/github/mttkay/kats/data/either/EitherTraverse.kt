@@ -10,7 +10,7 @@ import com.github.mttkay.kats.data.list.narrowList
 import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.OptionApplicative
 import com.github.mttkay.kats.data.option.narrowOption
-import com.github.mttkay.kats.ext.collection.liftList
+import com.github.mttkay.kats.ext.collection.toListK
 
 class EitherTraverse<L> :
     Traverse<EitherF<L>>,
@@ -43,8 +43,8 @@ fun <L, A, B> Either<L, ListK<A>>.traverseList(f: (ListK<A>) -> ListK<B>): ListK
     }.narrowList()
 
 fun <L, A, B> Either<L, List<A>>.traverseList(f: (List<A>) -> List<B>): List<Either<L, B>> =
-    map { it.liftList() }.traverse(ListApplicative) { a: ListKind<A> ->
-      f(a.narrowList().list).liftList()
+    map { it.toListK() }.traverse(ListApplicative) { a: ListKind<A> ->
+      f(a.narrowList().list).toListK()
     }.narrowList().list
 
 fun <L, A, B> Either<L, Option<A>>.traverseOption(f: (Option<A>) -> Option<B>): Option<Either<L, B>> =
@@ -59,7 +59,7 @@ fun <L, A> Either<L, ListK<A>>.sequenceList(): ListK<Either<L, A>> =
     sequence(ListApplicative).narrowList()
 
 fun <L, A> Either<L, List<A>>.sequenceList(): List<Either<L, A>> =
-    map { it.liftList() }.sequence(ListApplicative).narrowList().list
+    map { it.toListK() }.sequence(ListApplicative).narrowList().list
 
 fun <L, A> Either<L, Option<A>>.sequenceOption(): Option<Either<L, A>> =
     sequence(OptionApplicative).narrowOption()

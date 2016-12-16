@@ -1,13 +1,13 @@
 package com.github.mttkay.kats.data.list
 
-import com.github.mttkay.kats.ext.collection.liftList
+import com.github.mttkay.kats.ext.collection.toListK
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 class ListSemigroupKTest {
 
-  val list1 = listOf(1, 2, 3).liftList()
-  val list2 = listOf(4, 5, 6).liftList()
+  val list1 = listOf(1, 2, 3).toListK()
+  val list2 = listOf(4, 5, 6).toListK()
 
   @Test
   fun `combineK`() {
@@ -22,7 +22,7 @@ class ListSemigroupKTest {
 
     val combined = algebra.combine(list1, list2)
 
-    assertThat(combined).isEqualTo(listOf(1, 2, 3, 4, 5, 6).liftList())
+    assertThat(combined).isEqualTo(listOf(1, 2, 3, 4, 5, 6).toListK())
   }
 
 }

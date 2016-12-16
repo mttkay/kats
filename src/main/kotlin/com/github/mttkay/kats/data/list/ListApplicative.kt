@@ -1,7 +1,7 @@
 package com.github.mttkay.kats.data.list
 
 import com.github.mttkay.kats.Applicative
-import com.github.mttkay.kats.ext.collection.liftList
+import com.github.mttkay.kats.ext.collection.toListK
 
 object ListApplicative : Applicative<ListK.F> {
 
@@ -9,7 +9,7 @@ object ListApplicative : Applicative<ListK.F> {
       ListK(listOf(a))
 
   override fun <A, B> ap(fa: ListKind<A>, ffa: ListKind<(A) -> B>): ListK<B> =
-      ap(fa.narrowList().list, ffa.narrowList().list).liftList()
+      ap(fa.narrowList().list, ffa.narrowList().list).toListK()
 
   fun <A, B> ap(fa: List<A>, ffa: List<(A) -> B>): List<B> =
       ffa.flatMap { f -> fa.map(f) }

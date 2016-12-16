@@ -1,7 +1,7 @@
 package com.github.mttkay.kats.data.list
 
 import com.github.mttkay.kats.Functor
-import com.github.mttkay.kats.ext.collection.liftList
+import com.github.mttkay.kats.ext.collection.toListK
 
 object ListFunctor : Functor<ListK.F> {
   override fun <A, B> map(fa: ListKind<A>, f: (A) -> B): ListK<B> {
@@ -9,7 +9,7 @@ object ListFunctor : Functor<ListK.F> {
   }
 
   fun <A, B> liftList(f: (A) -> B): (List<A>) -> List<B> = { list: List<A> ->
-    ListK.lift(f).invoke(list.liftList()).list
+    ListK.lift(f).invoke(list.toListK()).list
   }
 }
 

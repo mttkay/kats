@@ -11,7 +11,7 @@ import com.github.mttkay.kats.data.option.Option
 import com.github.mttkay.kats.data.option.OptionApplicative
 import com.github.mttkay.kats.data.option.map
 import com.github.mttkay.kats.data.option.narrowOption
-import com.github.mttkay.kats.ext.collection.liftList
+import com.github.mttkay.kats.ext.collection.toListK
 
 // FOLDABLE
 
@@ -19,18 +19,18 @@ import com.github.mttkay.kats.ext.collection.liftList
 
 inline fun <A, B> List<A>.foldLeft(initial: B, f: (B, A) -> B): B = this.fold(initial, f)
 
-fun <A, B> List<A>.foldMap(m: Monoid<B>, f: (A) -> B): B = liftList().foldMap(m, f)
+fun <A, B> List<A>.foldMap(m: Monoid<B>, f: (A) -> B): B = toListK().foldMap(m, f)
 
 // TRAVERSE
 
 fun <A, B, G> List<K1<G, A>>.traverse(app: Applicative<G>, f: (K1<G, A>) -> K1<G, B>): K1<G, List<B>> =
-    app.map(liftList().traverse(app, f), ListK<B>::list)
+    app.map(toListK().traverse(app, f), ListK<B>::list)
 
 fun <A, B> List<Option<A>>.traverseOption(f: (Option<A>) -> Option<B>): Option<List<B>> =
-    liftList().traverseOption(f).map { it.list }
+    toListK().traverseOption(f).map { it.list }
 
 fun <A, G> List<K1<G, A>>.sequence(app: Applicative<G>): K1<G, List<A>> =
-    app.map(liftList().sequence(app)) { it.list }
+    app.map(toListK().sequence(app)) { it.list }
 
 fun <A> List<Option<A>>.sequenceOption(): Option<List<A>> =
     sequence(OptionApplicative).narrowOption()
@@ -41,11 +41,11 @@ fun <L, R> List<Either<L, R>>.sequenceEither(): Either<L, List<R>> =
 // FUNCTOR
 
 fun <A, B> List<A>.fproduct(f: (A) -> B): List<Pair<A, B>> =
-    liftList().fproduct(f).list
+    toListK().fproduct(f).list
 
 // APPLICATIVE
 
 infix fun <A, B> List<A>.product(that: List<B>): List<Pair<A, B>> =
-    ListMonad.product(this.liftList(), that.liftList()).narrowList().list
+    ListMonad.product(this.toListK(), that.toListK()).narrowList().list
 
 infix operator fun <A, B> List<A>.times(that: List<B>): List<Pair<A, B>> = product(that)

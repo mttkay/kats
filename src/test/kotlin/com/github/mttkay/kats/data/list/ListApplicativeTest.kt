@@ -1,6 +1,6 @@
 package com.github.mttkay.kats.data.list
 
-import com.github.mttkay.kats.ext.collection.liftList
+import com.github.mttkay.kats.ext.collection.toListK
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -55,6 +55,6 @@ class ListApplicativeTest {
 
     assertThat(product).isEqualTo(listOf(
         Pair(1, 3), Pair(1, 4), Pair(2, 3), Pair(2, 4)
-    ).liftList())
+    ).toListK())
   }
 }
