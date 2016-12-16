@@ -41,11 +41,11 @@ fun <L, R> List<Either<L, R>>.sequenceEither(): Either<L, List<R>> =
 // FUNCTOR
 
 fun <A, B> List<A>.fproduct(f: (A) -> B): List<Pair<A, B>> =
-    toListK().fproduct(f).list
+    map { Pair(it, f(it)) }
 
 // APPLICATIVE
 
 infix fun <A, B> List<A>.product(that: List<B>): List<Pair<A, B>> =
-    ListMonad.product(this.toListK(), that.toListK()).narrowList().list
+    flatMap { a -> that.map { b -> Pair(a, b) } }
 
 infix operator fun <A, B> List<A>.times(that: List<B>): List<Pair<A, B>> = product(that)
