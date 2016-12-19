@@ -7,12 +7,12 @@ import org.junit.Test
 class NullableExtTest {
 
   @Test
-  fun `liftOption for null`() {
+  fun `toOption for null`() {
     assertThat(null.toOption()).isEqualTo(Option.None)
   }
 
   @Test
-  fun `liftOption for value`() {
+  fun `toOption for value`() {
     assertThat(42.toOption()).isEqualTo(Option.Some(42))
   }
 }
