@@ -15,10 +15,10 @@ fun <L, R, S> ((EitherKind<L, R>) -> EitherKind<L, S>).narrowEitherFn() = this a
 fun <L, R, F> K1<F, EitherKind<L, R>>.narrowInnerEither() = this as K1<F, Either<L, R>>
 
 @Suppress("UNCHECKED_CAST") // safe, because operates on Right
-fun <L, R> Either.Right<*, R>.leftCast() = this as Either.Right<L, R>
+fun <L, R> Either.Right<*, R>.leftCast(): Either<L, R> = this as Either.Right<L, R>
 
 @Suppress("UNCHECKED_CAST") // safe, because operates on Left
-fun <L, R> Either.Left<L, *>.rightCast() = this as Either.Left<L, R>
+fun <L, R> Either.Left<L, *>.rightCast(): Either<L, R> = this as Either.Left<L, R>
 
 sealed class Either<out L, out R> : EitherKind<L, R> {
 
@@ -89,4 +89,14 @@ sealed class Either<out L, out R> : EitherKind<L, R> {
     is Left -> ifLeft
     is Right -> f(value)
   }
+}
+
+inline fun <L, R> Either<L, R>.getOrElse(default: () -> R): R = when (this) {
+  is Either.Left -> default()
+  is Either.Right -> value
+}
+
+inline fun <L, R> Either<L, R>.orElse(default: () -> Either<L, R>): Either<L, R> = when (this) {
+  is Either.Left -> default()
+  is Either.Right -> this
 }
