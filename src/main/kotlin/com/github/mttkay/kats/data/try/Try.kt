@@ -44,35 +44,16 @@ sealed class Try<out A> : TryKind<A> {
 
   abstract val get: A
 
-  class Success<out A>(val value: A) : Try<A>() {
+  data class Success<out A>(val value: A) : Try<A>() {
 
     override val isFailure = false
 
     override val isSuccess = true
 
     override val get: A = value
-
-    override fun equals(other: Any?): Boolean {
-      if (this === other) return true
-      if (other?.javaClass != javaClass) return false
-
-      other as Success<*>
-
-      if (value != other.value) return false
-
-      return true
-    }
-
-    override fun hashCode(): Int {
-      return value?.hashCode() ?: 0
-    }
-
-    override fun toString(): String {
-      return "Success(value=$value)"
-    }
   }
 
-  class Failure<out A>(val exception: Throwable) : Try<A>() {
+  data class Failure<out A>(val exception: Throwable) : Try<A>() {
 
     override val isFailure = true
 
@@ -80,25 +61,6 @@ sealed class Try<out A> : TryKind<A> {
 
     override val get: A
       get() = throw exception
-
-    override fun equals(other: Any?): Boolean {
-      if (this === other) return true
-      if (other?.javaClass != javaClass) return false
-
-      other as Failure<*>
-
-      if (exception != other.exception) return false
-
-      return true
-    }
-
-    override fun hashCode(): Int {
-      return exception.hashCode()
-    }
-
-    override fun toString(): String {
-      return "Failure(exception=$exception)"
-    }
   }
 }
 

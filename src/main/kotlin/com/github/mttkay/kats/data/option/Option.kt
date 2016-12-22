@@ -13,28 +13,11 @@ sealed class Option<out A> : OptionKind<A> {
 
   class F
 
-  class Some<out A>(val value: A) : Option<A>() {
+  data class Some<out A>(val value: A) : Option<A>() {
 
     override val isEmpty: Boolean = false
 
     override val isDefined: Boolean = true
-
-    override fun equals(other: Any?): Boolean {
-      if (this === other) return true
-      if (other?.javaClass != javaClass) return false
-
-      other as Some<*>
-
-      if (value != other.value) return false
-
-      return true
-    }
-
-    override fun hashCode(): Int {
-      return value?.hashCode() ?: 0
-    }
-
-    override fun toString(): String = "Some($value)"
   }
 
   object None : Option<Nothing>() {
@@ -47,6 +30,7 @@ sealed class Option<out A> : OptionKind<A> {
   }
 
   abstract val isEmpty: Boolean
+
   abstract val isDefined: Boolean
 
   val orNull: A?
