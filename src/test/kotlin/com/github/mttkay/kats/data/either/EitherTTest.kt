@@ -7,10 +7,7 @@ import org.junit.Test
 
 class EitherTTest {
 
-  typealias L = String
-  typealias R = Int
-
-  val eitherT = EitherTBuilder<Id.F, L, R>(IdMonad)
+  val eitherT = EitherTBuilder<Id.F, String, Int>(IdMonad)
 
   val left = eitherT.left(Id("bad"))
   val right = eitherT.right(Id(42))

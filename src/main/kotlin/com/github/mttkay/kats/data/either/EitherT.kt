@@ -9,8 +9,6 @@ private typealias _E<F, L, R> = K1<F, Either<L, R>>
 data class EitherT<F, L, R>(val value: K1<F, Either<L, R>>,
                             private val monad: Monad<F>) {
 
-  private typealias _F<A> = K1<F, A>
-
   companion object {
 
     fun <F, L, R> left(v: K1<F, L>, monad: Monad<F>): EitherT<F, L, R> =
@@ -21,11 +19,11 @@ data class EitherT<F, L, R>(val value: K1<F, Either<L, R>>,
 
   }
 
-  val isLeft: _F<Boolean> = monad.map(value) { it.isLeft }
+  val isLeft: K1<F, Boolean> = monad.map(value) { it.isLeft }
 
-  val isRight: _F<Boolean> = monad.map(value) { it.isRight }
+  val isRight: K1<F, Boolean> = monad.map(value) { it.isRight }
 
-  fun getOrElse(default: () -> R): _F<R> = monad.map(value) { it.getOrElse(default) }
+  fun getOrElse(default: () -> R): K1<F, R> = monad.map(value) { it.getOrElse(default) }
 
   fun <S> map(f: (R) -> S): EitherT<F, L, S> = EitherT(monad.map(value) { it.map(f) }, monad)
 
@@ -37,7 +35,7 @@ data class EitherT<F, L, R>(val value: K1<F, Either<L, R>>,
         }
       }, monad)
 
-  fun <S> flatMapF(f: (R) -> _F<Either<L, S>>): EitherT<F, L, S> =
+  fun <S> flatMapF(f: (R) -> K1<F, Either<L, S>>): EitherT<F, L, S> =
       flatMap { EitherT(f(it), monad) }
 
   fun <M, S> transform(f: (Either<L, R>) -> Either<M, S>): EitherT<F, M, S> =
