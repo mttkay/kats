@@ -21,6 +21,9 @@ sealed class Try<out A> : TryKind<A> {
   class F
 
   companion object {
+
+    fun <A> lift(f: () -> A): () -> Try<A> = { Try.run(f) }
+
     inline fun <A> run(f: () -> A): Try<A> =
         try {
           Success(f())

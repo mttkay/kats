@@ -42,4 +42,10 @@ class TryTest {
   fun `getOrElse failure`() {
     assertThat(Failure<Int>(error).getOrElse { 0 }).isEqualTo(0)
   }
+
+  @Test
+  fun `lift throwing function`() {
+    val f = { throw error }
+    assertThat(Try.lift(f).invoke()).isEqualTo(Failure<Nothing>(error))
+  }
 }
